@@ -86,3 +86,9 @@ alimflexible + pxtorem
 竞品：
     - svn (集中式版本控制工具)
     - tfs（集中式版本控制工具）
+### 获取代码
+```shell
+git pull
+git fetch
+git merge
+```
