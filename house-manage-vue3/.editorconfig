@@ -1,0 +1,18 @@
+root = true
+
+[*]
+charset = utf-8
+
+tab_width = 2
+indent_size = 2
+indent_style = space
+end_of_line = CRLF
+insert_final_newline = true
+trim_trailing_whitespace = true
+vetur.validation.template= true  
+printWidth=200
+[*.md]
+trim_trailing_whitespace = false
+
+[Makefile]
+indent_style = tab
