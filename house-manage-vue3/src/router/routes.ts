@@ -24,7 +24,15 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: '/home',
     name: 'Home',
+    meta: {
+      requireAuth: true
+    },
     component: () => import(/* webpackChunkName: "Home" */ '@/views/home/index.vue')
+  },
+  {
+    path: '/user/:uid',
+    name: 'UserInfo',
+    component: () => import(/* webpackChunkName: "UserInfo" */ '@/views/user/info/index.vue')
   },
   {
     path: '/user/login',
