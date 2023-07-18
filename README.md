@@ -108,3 +108,11 @@ git branch -d <branchname>
 强制删除分支
 git branch -D <branchname>
 ```
+
+### 重置
+#### 未commit要撤回修改
+git checkout .  撤回所有文件修改
+git checkout a.js 撤回某个文件修改
+#### 已commit要撤回
+git log 查看最新的提交的某个log
+git reset --hard < 7762f02e2ae13a57>
