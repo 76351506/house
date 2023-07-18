@@ -115,5 +115,9 @@ git branch -d <branchname>
 强制删除分支
 git branch -D <branchname>
 ```
-
-haha
+#### rebase
+```shell
+git rebase
+git rebase --continue
+git rebase --skip
+```
