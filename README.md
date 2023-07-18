@@ -92,3 +92,19 @@ git pull
 git fetch
 git merge
 ```
+### 分支
+```shell
+查看远程分支
+git branch -a 
+创建分支
+git branch <branchname>
+切换分支
+git checkout <branchname>
+创建并切换分支
+git checkout -b <branchname>
+git branch 查看分支
+删除分支
+git branch -d <branchname>
+强制删除分支
+git branch -D <branchname>
+```
