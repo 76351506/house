@@ -12,6 +12,7 @@
     "egg-mysql": "^3.0.0",
     "egg-scripts": "^2.11.0",
     "jsonwebtoken": "^8.5.1",
+    "node-media-server": "^2.6.2",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

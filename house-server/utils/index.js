@@ -11,7 +11,7 @@ const SECRET = "LY";
  * @return {token}
  */
 const createToken = (user, time) => {
-    return jwt.sign(user, SECRET, { expiresIn: time });
+  return jwt.sign(user, SECRET, { expiresIn: time });
 };
 
 /**
@@ -20,10 +20,10 @@ const createToken = (user, time) => {
  * @return {加密字符串}
  */
 const md5 = (password) => {
-    return crypto
-        .createHash("md5")
-        .update(`password=${password}&SECRET=${SECRET}`)
-        .digest("hex");
+  return crypto
+    .createHash("md5")
+    .update(`password=${password}&SECRET=${SECRET}`)
+    .digest("hex");
 };
 
 /**
@@ -32,10 +32,10 @@ const md5 = (password) => {
  * @return {解密后用户信息}
  */
 const veriftyToken = (token, SECRET) => {
-    return jwt.verify(token, SECRET);
+  return jwt.verify(token, SECRET);
 };
 module.exports = {
-    createToken,
-    md5,
-    veriftyToken,
+  createToken,
+  md5,
+  veriftyToken,
 };

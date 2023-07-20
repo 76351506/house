@@ -8,57 +8,51 @@
  */
 /* eslint valid-jsdoc: "off" */
 
-'use strict';
+"use strict";
 
 /**
  * @param {Egg.EggAppInfo} appInfo app info
  */
-module.exports = appInfo => {
+module.exports = (appInfo) => {
   /**
    * built-in config
    * @type {Egg.EggAppConfig}
    **/
-  const config = (exports = {});
-
-  // use for cookie sign key, should change to your own and keep security
-  config.keys = appInfo.name + '_1636591141914_4788';
-
-  // add your middleware config here
-  config.middleware = [];
-
-  // add your user config here
-  const userConfig = {
-    // myAppName: 'egg',
-    // 连接数据库
+  const config = (exports = {
     mysql: {
-      // 单数据库信息配置
       client: {
-        // host rm-uf6qobv9we5mbj5u3ro.mysql.rds.aliyuncs.com
-        host: 'localhost',
-        // 端口号
-        port: '3306',
-        // 用户名
-        user: 'root',
-        // 密码
-        password: '982500',
-        // 数据库名
-        database: 'house',
+        host: "localhost",
+        port: "3306",
+        user: "root",
+        password: "123456",
+        database: "house",
       },
-      // 是否加载到 app 上，默认开启
       app: true,
-      // 是否加载到 agent 上，默认关闭
       agent: false,
     },
-    // 禁止安全措施
     security: {
       csrf: {
         enable: false,
       },
     },
+  });
+
+  config.keys = appInfo.name + "_1636591141914_4788";
+
+  config.middleware = [];
+  config.mediaServer = {
+    rtmp: {
+      port: 23480,
+      chunk_size: 60000,
+      gop_cache: true,
+      ping: 30,
+      ping_timeout: 60,
+    },
+    http: {
+      port: 23481,
+      allow_origin: "*",
+    },
   };
 
-  return {
-    ...config,
-    ...userConfig,
-  };
+  return config;
 };
