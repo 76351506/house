@@ -129,3 +129,68 @@ git checkout a.js 撤回某个文件修改
 #### 已commit要撤回
 git log 查看最新的提交的某个log
 git reset --hard < 7762f02e2ae13a57>
+
+## 路由模式
+- history: createWebHistory(process.env.BASE_URL),
+- history: createWebHashHistory(process.env.BASE_URL),
+
+
+## vue2&vue3区别
+- 路由模式的设置
+- 生命周期的不同
+  - beforeCreate、 created vue3没有，通过setup来代替
+  - 其他Vue2生命周期添加 on前缀:
+    - onBeforeMounted
+    - onMounted
+    - onBeforeUpdate
+    - onUpdated
+    - beforeDestory  => onBeforeUnmount
+    - destoryed  => onUnmount
+    - activated => onActivated
+    - deactivated => onDeactivated  
+  - onRenderTrack
+  - onRenderTrigger
+  - onErrorCaptured
+## 路由实现原理
+### 路由获取参数
+- this.$router this.$route
+- useRouter useRoute
+
+## API
+ - 跳转
+  - path
+  - name
+- 声明路由方式
+  - path
+  - name
+- 路由传参
+  - router-link
+    - params
+    - state
+    - 动态路由  /user/:id
+  - js方式
+    - params
+    - state
+    - 动态路由  /user/:id
+- 路由重定向
+- 导航守卫
+  - 全局
+  - 路由
+  - 组件独享
+- 路由meta 元信息
+- 路由 transition
+
+
+## 完整的导航解析流程
+导航被触发。
+在失活的组件里调用 beforeRouteLeave 守卫。
+调用全局的 beforeEach 守卫。
+在重用的组件里调用 beforeRouteUpdate 守卫(2.2+)。
+在路由配置里调用 beforeEnter。
+解析异步路由组件。
+在被激活的组件里调用 beforeRouteEnter。
+调用全局的 beforeResolve 守卫(2.5+)。
+导航被确认。
+调用全局的 afterEach 钩子。
+触发 DOM 更新。
+调用 beforeRouteEnter 守卫中传给 next 的回调函数，创建好的组件实例会作为回调函数的参数传入。

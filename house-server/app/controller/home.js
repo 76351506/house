@@ -1,19 +1,19 @@
-'use strict';
+"use strict";
 
-const Controller = require('egg').Controller;
+const Controller = require("egg").Controller;
 
 class HomeController extends Controller {
   async index() {
     const { ctx } = this;
-    ctx.body = 'hi, egg';
+    ctx.body = "hi, egg";
   }
   async sider() {
     const { ctx } = this;
-    const results = await this.app.mysql.select('sider');
+    const results = await this.app.mysql.select("sider");
     ctx.body = {
       code: 200,
-      data: results
-    }
+      data: results,
+    };
   }
 }
 
