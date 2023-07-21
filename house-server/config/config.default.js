@@ -1,45 +1,31 @@
 /*
- * @Author: your name
- * @Date: 2021-11-20 11:02:08
- * @LastEditTime: 2022-03-23 09:03:00
- * @LastEditors: Please set LastEditors
- * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- * @FilePath: /egg/config/config.default.js
+ * @Author: heinan
+ * @Date: 2023-07-21 10:40:26
+ * @Last Modified by: heinan
+ * @Last Modified time: 2023-07-21 10:43:24
  */
-/* eslint valid-jsdoc: "off" */
-
 "use strict";
 
-/**
- * @param {Egg.EggAppInfo} appInfo app info
- */
 module.exports = (appInfo) => {
-  /**
-   * built-in config
-   * @type {Egg.EggAppConfig}
-   **/
-  const config = (exports = {
-    mysql: {
-      client: {
-        host: "localhost",
-        port: "3306",
-        user: "root",
-        password: "123456",
-        database: "house",
-      },
-      app: true,
-      agent: false,
-    },
-    security: {
-      csrf: {
-        enable: false,
-      },
-    },
-  });
-
+  const config = (exports = {});
   config.keys = appInfo.name + "_1636591141914_4788";
-
   config.middleware = [];
+  config.security = {
+    csrf: {
+      enable: false,
+    },
+  };
+  config.mysql = {
+    client: {
+      host: "localhost",
+      port: "3306",
+      user: "root",
+      password: "123456",
+      database: "house",
+    },
+    app: true,
+    agent: false,
+  };
   config.mediaServer = {
     rtmp: {
       port: 23480,

@@ -2,13 +2,20 @@
  * @Author: heinan
  * @Date: 2023-07-20 19:26:02
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-20 21:38:02
+ * @Last Modified time: 2023-07-21 12:06:37
  */
+const http = require("http");
 const NodeMediaServer = require("node-media-server");
+
+const { Server } = require("socket.io");
+const app = require("express")();
+const httpServer = http.createServer(app);
 
 class AppBootHook {
   constructor(app) {
     this.app = app;
+    this.roomList = {};
+    this.userList = [];
   }
   configWillLoad() {
     // 此时 config 文件已经被读取并合并，但是还并未生效
@@ -22,9 +29,42 @@ class AppBootHook {
     // 可以用来加载应用自定义的文件，启动自定义的服务
 
     if (!this.app.nms) {
-      this.app.nms = new NodeMediaServer(this.app.config.mediaServer); //获取config配置
-      this.app.nms.run();
+      // 创建nms服务，获取nms配置对象
+      this.app.nms = new NodeMediaServer(this.app.config.mediaServer);
+      // 创建socket服务
+      const io = new Server(httpServer, {
+        cors: true,
+      });
+      const self = this;
+      httpServer.listen(3000, () => {
+        console.log("server is running at http://127.0.0.1:3000");
+      });
 
+      io.on("connection", (socket) => {
+        // 用户加入
+        socket.on("join", function (user) {
+          // 通过emit定向广播
+          if (self.userList.includes(user)) return;
+          self.userList.push(user);
+          socket.emit("announcement", `"用户 ${user} 加入了聊天室!`);
+        });
+        socket.on("send.message", function (user, msg) {
+          // 通过全局广播
+          console.log(msg);
+          io.emit("send.message", user, msg);
+        });
+        socket.on("disconnect", function () {
+          if (socket.nickname) {
+            socket.broadcast.emit(
+              "send.message",
+              "用户",
+              socket.nickname + "已离开聊天室!"
+            );
+          }
+        });
+      });
+
+      this.app.nms.run();
       this.app.nms.on("preConnect", (id, args) => {
         console.log(
           "[NodeEvent on preConnect]",

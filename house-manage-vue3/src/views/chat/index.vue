@@ -2,13 +2,16 @@
   <div>
     <Player></Player>
     <div>
+      {{ state.list }}
       <p v-for="(list, index) in state.list" :key="index">
         {{ list.user }}:
         <span v-text="list.data"></span>
       </p>
+      <a-space>
+        <a-input type="text" v-model:value="state.insert" />
+        <a-button @click="onClick">发送</a-button>
+      </a-space>
     </div>
-    <input type="text" v-model="state.insert" />
-    <button @click="onClick">发送</button>
   </div>
 </template>
 
@@ -37,7 +40,7 @@ onMounted(() => {
     socket.emit('join', state.username)
   })
   socket.on('announcement', function (data) {
-    console.log(data)
+    console.log('announcement', data)
   })
   socket.on('send.message', (user, data) => {
     state.list.push({ user, data })

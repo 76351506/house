@@ -1,22 +1,24 @@
 <template>
   <div class="media-player-wraper">
-    <div class="media-player">
+    <div class="media-player-empyt" v-if="videoPlayer == null">直播未开始！</div>
+    <div class="media-player-video" v-else>
       <video ref="videoPlayer"></video>
     </div>
-    <div class="media-tool">
-      <a-button @click="onPlay">直播</a-button>
-      <a-driver />
-      <a-button @click="onPause">暂停</a-button>
-      <a-button @click="onMuted">静音</a-button>
-      <a-button @click="onStop">停播</a-button>
+    <div class="media-player-tool">
+      <a-space>
+        <a-button @click="onPlay">直播</a-button>
+        <a-button @click="onPause">暂停</a-button>
+        <a-button @click="onMuted">静音</a-button>
+        <a-button @click="onStop">停播</a-button>
+      </a-space>
       <a-slider :tooltip-visible="true" @change="onVolumechange" />
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { onMounted, onBeforeUnmount, defineProps, ref } from 'vue'
+import { onMounted, nextTick, defineProps, ref } from 'vue'
 import { generatorLiveAddress } from '@/utils'
-import flvjs from 'flv.js'
+import flvjs, { mediaDataSource } from 'flv.js'
 
 defineProps({
   volume: {
@@ -24,43 +26,61 @@ defineProps({
     default: 50
   }
 })
-console.log(generatorLiveAddress('live', 'stream'))
-const videoPlayer = ref<HTMLElement | null>(null)
-let flvPlayer: any = null
-if (flvjs.isSupported()) {
-  flvPlayer = flvjs.createPlayer({
-    type: 'flv',
-    isLive: true,
-    cors: true,
-    url: generatorLiveAddress('live', 'stream')
-  })
-}
+
+let videoPlayer = ref<HTMLElement | null>(null)
+let flvPlayer = ref<any | null>(null)
+
 onMounted(() => {
-  console.log(videoPlayer.value)
-  flvPlayer.attachMediaElement(videoPlayer.value)
-  flvPlayer.load()
+  if (flvjs.isSupported()) {
+    const url = generatorLiveAddress('live', 'stream')
+    const config: mediaDataSource = {
+      type: 'flv',
+      isLive: true,
+      url
+    }
+    flvPlayer.value = flvjs.createPlayer(config, {
+      deferLoadAfterSourceOpen: false
+    })
+  }
 })
-onBeforeUnmount(() => {
-  flvPlayer.stop()
-})
+
 const onPlay = () => {
-  flvPlayer.play()
+  flvPlayer.value.attachMediaElement(videoPlayer.value)
+  flvPlayer.value.load()
+  flvPlayer.value.play()
 }
 const onStop = () => {
-  flvPlayer.stop()
+  console.log('onStop')
 }
 const onMuted = () => {
-  flvPlayer.muted()
+  console.log('onMuted')
 }
 const onPause = () => {
-  flvPlayer.pause()
+  console.log('onPause')
 }
 const onVolumechange = (value: number) => {
-  flvPlayer.volume = value
+  // flvPlayer.volume = value
 }
 </script>
 <style lang="less">
-.media-player {
-  background-color: #dec;
+.media-player-wraper {
+  width: 100%;
+  background-color: #333;
+
+  .media-player-empyt {
+    height: 100%;
+    width: 100%;
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+  }
+  .media-player-video {
+    height: 100%;
+    width: 100%;
+    & > video {
+      display: block;
+      width: 100%;
+    }
+  }
 }
 </style>

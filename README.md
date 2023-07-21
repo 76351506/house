@@ -194,3 +194,17 @@ git reset --hard < 7762f02e2ae13a57>
 调用全局的 afterEach 钩子。
 触发 DOM 更新。
 调用 beforeRouteEnter 守卫中传给 next 的回调函数，创建好的组件实例会作为回调函数的参数传入。
+
+## 直播
+- node-media-server 搭建node服务
+  - 后台技术选型采用了 egg，自定义服务需要再app.js声明
+  - 根据文档配置启动nms服务器
+- obs
+  - 安装
+  - 打开文件-设置-直播
+  - 选择自定义服务
+  - 设置nms服务器的地址 rtmp:127.0.0.1:${nsm后台配置的rtmp端口}/${相当于页面或者房间号}
+  - 推流码
+  - 开始直播
+- 前端页面读取 http-flv格式的视频流
+- 点击播放观看直播
