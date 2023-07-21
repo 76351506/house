@@ -18,6 +18,7 @@
     "babel-plugin-import": "^1.13.6",
     "core-js": "^3.8.3",
     "echarts": "^5.4.2",
+    "flv.js": "1.6.2",
     "socket.io-client": "^4.7.1",
     "stylelint": "^15.10.1",
     "vue": "^3.2.13",

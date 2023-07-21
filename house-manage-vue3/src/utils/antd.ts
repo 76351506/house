@@ -2,10 +2,11 @@
  * @Author: heinan
  * @Date: 2023-07-04 16:48:59
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-05 08:36:50
+ * @Last Modified time: 2023-07-21 10:12:07
  */
 import 'ant-design-vue/dist/antd.less'
 import {
+  Slider,
   ConfigProvider,
   Layout,
   Input,
@@ -48,6 +49,7 @@ import {
   Space
 } from 'ant-design-vue'
 export default (Vue: any) => {
+  Vue.use(Slider)
   Vue.use(ConfigProvider)
   Vue.use(Layout)
   Vue.use(Input)
