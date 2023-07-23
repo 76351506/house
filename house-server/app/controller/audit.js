@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2023-07-23 22:59:43
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-24 00:10:50
+ * @Last Modified time: 2023-07-24 00:18:41
  */
 "use strict";
 const { Controller } = require("egg");
@@ -39,7 +39,6 @@ class AuditController extends Controller {
       };
     }
   }
-  // 修改审核状态
   async update() {
     const result = await this.ctx.service.audit.update({
       ...this.ctx.params,

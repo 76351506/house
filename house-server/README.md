@@ -1,33 +1,12 @@
-# egg
+## 八维宏业找房后台管理系统
 
-
-
-## QuickStart
-
-<!-- add docs here for user -->
-
-see [egg docs][egg] for more detail.
-
-### Development
-
-```bash
-$ npm i
-$ npm run dev
-$ open http://localhost:7001/
-```
-
-### Deploy
-
-```bash
-$ npm start
-$ npm stop
-```
-
-### npm scripts
-
-- Use `npm run lint` to check code style.
-- Use `npm test` to run unit test.
-- Use `npm run autod` to auto detect dependencies upgrade, see [autod](https://www.npmjs.com/package/autod) for more detail.
-
-
-[egg]: https://eggjs.org
+## 开始
+- [获取代码](http://111.67.201.44:9002/heinan/house) 
+- yarn install
+- npm run dev
+## 后台架构
+- egg
+- MVC
+- RESETFUL API
+## 功能列表
+- 房源审核

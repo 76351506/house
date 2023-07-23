@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2023-07-20 19:06:56
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-23 23:26:53
+ * @Last Modified time: 2023-07-24 00:45:37
  */
 
 module.exports = (app) => {
@@ -15,10 +15,10 @@ module.exports = (app) => {
   // router.post("/set/audit", controller.audit.setAudit);
   router.resources("audit", "/api/v1/audit", app.controller.audit);
 
-  // 登录
-  router.post("/login", controller.user.login);
-  // 注册
-  router.post("/registry", controller.user.registry);
+  // 用户接口
+  router.post("/user/login", controller.user.login);
+  router.post("/user/registry", controller.user.registry);
+
   // 获取用户列表
   router.get("/userInfo", controller.userInfo.userInfo);
   // 删除用户
