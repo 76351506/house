@@ -6,31 +6,6 @@
   "egg": {
     "declarations": true
   },
-  "dependencies": {
-    "crypto": "^1.0.1",
-    "egg": "^2.15.1",
-    "egg-mysql": "^3.0.0",
-    "egg-scripts": "^2.11.0",
-    "express": "^4.18.2",
-    "jsonwebtoken": "^8.5.1",
-    "node-media-server": "^2.6.2",
-    "socket.io": "^4.7.1",
-    "uuid": "^9.0.0"
-  },
-  "devDependencies": {
-    "autod": "^3.0.1",
-    "autod-egg": "^1.1.0",
-    "egg-bin": "^4.11.0",
-    "egg-ci": "^1.11.0",
-    "egg-mock": "^3.21.0",
-    "eslint": "^5.13.0",
-    "eslint-config-egg": "^7.1.0",
-    "husky": "^8.0.3",
-    "lint-staged": "^13.2.3"
-  },
-  "engines": {
-    "node": ">=10.0.0"
-  },
   "scripts": {
     "start": "egg-scripts start --daemon --title=egg-server-egg",
     "stop": "egg-scripts stop --title=egg-server-egg",
@@ -43,6 +18,32 @@
     "ci": "npm run lint && npm run cov",
     "autod": "autod",
     "prepare": "husky install"
+  },
+  "dependencies": {
+    "uuid": "^9.0.0",
+    "crypto": "^1.0.1",
+    "socket.io": "^4.7.1",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^8.5.1",
+    "node-media-server": "^2.6.2"
+  },
+  "devDependencies": {
+    "egg-bin": "^4.11.0",
+    "egg-ci": "^1.11.0",
+    "egg-mock": "^3.21.0",
+    "egg": "^2.15.1",
+    "egg-mysql": "^3.0.0",
+    "egg-scripts": "^2.11.0",
+    "egg-validate": "^2.0.2",
+    "autod": "^3.0.1",
+    "husky": "^8.0.3",
+    "autod-egg": "^1.1.0",
+    "lint-staged": "^13.2.3",
+    "eslint": "^5.13.0",
+    "eslint-config-egg": "^7.1.0"
+  },
+  "engines": {
+    "node": ">=10.0.0"
   },
   "ci": {
     "version": "10"

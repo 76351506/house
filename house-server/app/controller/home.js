@@ -1,6 +1,11 @@
+/*
+ * @Author: heinan
+ * @Date: 2023-07-23 22:51:15
+ * @Last Modified by: heinan
+ * @Last Modified time: 2023-07-23 22:59:59
+ */
 "use strict";
-
-const Controller = require("egg").Controller;
+const { Controller } = require("egg");
 
 class HomeController extends Controller {
   async index() {
@@ -16,5 +21,4 @@ class HomeController extends Controller {
     };
   }
 }
-
 module.exports = HomeController;

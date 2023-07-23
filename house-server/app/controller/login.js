@@ -1,8 +1,14 @@
+/*
+ * @Author: heinan
+ * @Date: 2023-07-23 22:50:53
+ * @Last Modified by: heinan
+ * @Last Modified time: 2023-07-23 23:00:50
+ */
 "use strict";
 const Controller = require("egg").Controller;
-const { md5, createToken } = require("../../utils/index");
+const { md5, createToken } = require("../utils/index");
+
 class Login extends Controller {
-  //登录
   async login() {
     const { ctx } = this;
     const { password, username } = ctx.request.body;

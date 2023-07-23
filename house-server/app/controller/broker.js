@@ -1,6 +1,11 @@
+/*
+ * @Author: heinan
+ * @Date: 2023-07-23 22:51:39
+ * @Last Modified by: heinan
+ * @Last Modified time: 2023-07-23 23:00:20
+ */
 "use strict";
-
-const Controller = require("egg").Controller;
+const { Controller } = require("egg");
 
 class Broker extends Controller {
   async broker() {

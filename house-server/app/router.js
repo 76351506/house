@@ -2,13 +2,19 @@
  * @Author: heinan
  * @Date: 2023-07-20 19:06:56
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-20 19:19:28
+ * @Last Modified time: 2023-07-23 23:26:53
  */
 
 module.exports = (app) => {
   const { router, controller } = app;
   router.get("/", controller.home.index);
-  // ----------------------------后台管理-------------------------------- //
+
+  // 审核列表
+  // router.get("/audit", controller.audit.audit);
+  // router.delete("/audit", controller.audit.delAudit);
+  // router.post("/set/audit", controller.audit.setAudit);
+  router.resources("audit", "/api/v1/audit", app.controller.audit);
+
   // 登录
   router.post("/login", controller.user.login);
   // 注册
@@ -37,12 +43,7 @@ module.exports = (app) => {
   router.get("/order", controller.order.order);
   // 订单管理删除接口
   router.delete("/del/order", controller.order.delOrder);
-  // 获取审核列表
-  router.get("/audit", controller.audit.audit);
-  // 审核管理删除接口
-  router.delete("/del/audit", controller.audit.delAudit);
-  // 审核管理删除接口
-  router.post("/set/audit", controller.audit.setAudit);
+
   // 获取房源列表
   router.get("/housing", controller.housing.housing);
   // 销售楼盘删除接口

@@ -1,9 +1,12 @@
-//生成token
-const jwt = require("jsonwebtoken");
-//密码加密
+/*
+ * @Author: heinan
+ * @Date: 2023-07-23 22:55:13
+ * @Last Modified by: heinan
+ * @Last Modified time: 2023-07-23 22:59:36
+ */
 const crypto = require("crypto");
-//定义公共秘钥
-const SECRET = "LY";
+const jwt = require("jsonwebtoken");
+const { PASSWORD_SECRET, TOKEN_SECRET } = require("../config");
 
 /**
  * @description: 生成token
@@ -11,7 +14,7 @@ const SECRET = "LY";
  * @return {token}
  */
 const createToken = (user, time) => {
-  return jwt.sign(user, SECRET, { expiresIn: time });
+  return jwt.sign(user, TOKEN_SECRET, { expiresIn: time });
 };
 
 /**
@@ -22,7 +25,7 @@ const createToken = (user, time) => {
 const md5 = (password) => {
   return crypto
     .createHash("md5")
-    .update(`password=${password}&SECRET=${SECRET}`)
+    .update(`password=${password}&SECRET=${PASSWORD_SECRET}`)
     .digest("hex");
 };
 
@@ -31,9 +34,10 @@ const md5 = (password) => {
  * @param {token:token,SECRET:秘钥}
  * @return {解密后用户信息}
  */
-const veriftyToken = (token, SECRET) => {
-  return jwt.verify(token, SECRET);
+const veriftyToken = (token) => {
+  return jwt.verify(token, TOKEN_SECRET);
 };
+
 module.exports = {
   createToken,
   md5,
