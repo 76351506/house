@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2023-07-23 22:55:13
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-24 00:59:33
+ * @Last Modified time: 2023-07-24 01:03:02
  */
 const crypto = require("crypto");
 const jsonwebtoken = require("jsonwebtoken");
@@ -11,7 +11,8 @@ const { PASSWORD_SECRET, TOKEN_SECRET } = require("../config");
 
 /**
  * @description: 生成token
- * @param {user:用户信息（object）,time:token有效时间（string 单位(s|m|h) ）}
+ * @param id String 用户id
+ * @param exp String 过期时间
  * @return {token}
  */
 const tokenCreator = (id, exp) => {
