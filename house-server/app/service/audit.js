@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2020-07-16 11:33:19
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-24 13:33:43
+ * @Last Modified time: 2023-07-24 17:34:44
  */
 "use strict";
 const { Service } = require("egg");
@@ -18,6 +18,7 @@ class AuditService extends Service {
    * @param pageSize Number 分页展示个数
    * @returns
    */
+
   async index({ province, city, county, title, state, currentPage, pageSize }) {
     const where = {};
     if (province) {
@@ -37,11 +38,18 @@ class AuditService extends Service {
       where.state = state;
     } else {
     }
-    return await this.app.mysql.select("controls", {
+    const result = await this.app.mysql.select("controls", {
       where,
       offset: (currentPage - 1) * pageSize,
       limit: parseInt(pageSize),
     });
+    const total = await this.app.mysql.count("controls", where);
+    return {
+      data: result,
+      total,
+      pageSize: Number(pageSize),
+      currentPage: Number(currentPage),
+    };
   }
   async destroy({ id }) {
     return await this.app.mysql.delete("controls", { id });

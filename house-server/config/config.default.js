@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2023-07-21 10:40:26
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-24 15:40:42
+ * @Last Modified time: 2023-07-24 16:28:52
  */
 "use strict";
 const { routeCreator } = require("../app/utils");
@@ -10,8 +10,8 @@ const { routeCreator } = require("../app/utils");
 module.exports = (appInfo) => {
   const config = (exports = {});
   config.keys = appInfo.name + "_1636591141914_4788";
-  config.middleware = ["responseTime", "checkLogin", "checkIdentity", "gzip"];
-  // config.middleware = ["responseTime", "checkLogin", "gzip"];
+  // config.middleware = ["responseTime", "checkLogin", "checkIdentity", "gzip"];
+  config.middleware = ["responseTime", "checkLogin", "gzip"];
   config.security = {
     csrf: {
       enable: false,
@@ -52,6 +52,7 @@ module.exports = (appInfo) => {
   // 身份白名单，不需要验证身份
   config.identityWhiteList = [
     routeCreator("/getViewAuthByIdentityId", "GET"),
+    routeCreator(/^\/api\/v1\/broker\/*/, "any"),
     // 学生登陆
     // route(/^\/student\/*/, "any"),
   ];

@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2023-07-20 19:06:56
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-24 13:34:49
+ * @Last Modified time: 2023-07-24 16:10:16
  */
 
 module.exports = (app) => {
@@ -33,15 +33,6 @@ module.exports = (app) => {
     "/getApiAuthByIdentityId/:id",
     controller.apiAuth.getApiAuthByIdentityId
   );
-
-  // 获取经纪人列表
-  // router.get("/broker", controller.broker.broker);
-  // // 删除经纪人列表
-  // router.delete("/del/broker", controller.broker.delBroker);
-  // // 修改经纪人状态接口
-  // router.post("/set/BrokerStatus", controller.broker.setBrokerStatus);
-  // // 添加经纪人状态接口
-  // router.put("/add/Broker", controller.broker.putBroker);
 
   // 用户接口
   router.post("/user/login", controller.user.login);
