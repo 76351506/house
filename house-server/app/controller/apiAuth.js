@@ -2,14 +2,14 @@
  * @Author: heinan
  * @Date: 2023-07-24 09:44:05
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-24 10:48:13
+ * @Last Modified time: 2023-07-24 11:39:41
  */
 "use strict";
 const { Controller } = require("egg");
 
-class ApiController extends Controller {
+class ApiAuthrityController extends Controller {
   async index() {
-    const result = this.ctx.service.api.index();
+    const result = await this.ctx.service.apiAuth.index();
     if (result.length) {
       this.ctx.body = {
         code: 1,
@@ -27,9 +27,8 @@ class ApiController extends Controller {
   async create() {
     try {
       this.ctx.validate({
-        api_authority_url: "string",
-        api_authority_text: "string",
-        api_authority_method: "string",
+        identity_id: "string",
+        api_authority_id: "string",
       });
     } catch (err) {
       this.ctx.status = 406;
@@ -38,7 +37,7 @@ class ApiController extends Controller {
         error: err.errors,
       });
     }
-    const result = await this.ctx.service.api.create(this.ctx.request.body);
+    const result = await this.ctx.service.apiAuth.create(this.ctx.request.body);
     if (result.affectedRows) {
       this.ctx.body = {
         code: 1,
@@ -54,9 +53,8 @@ class ApiController extends Controller {
   async update() {
     try {
       this.ctx.validate({
-        api_authority_url: "string",
-        api_authority_text: "string",
-        api_authority_method: "string",
+        identity_id: "string",
+        api_authority_id: "string",
       });
     } catch (err) {
       this.ctx.status = 406;
@@ -65,7 +63,7 @@ class ApiController extends Controller {
         error: err.errors,
       });
     }
-    const result = await this.ctx.service.api.update({
+    const result = await this.ctx.service.apiAuth.update({
       ...this.ctx.params,
       ...this.ctx.request.body,
     });
@@ -82,7 +80,7 @@ class ApiController extends Controller {
     }
   }
   async destroy() {
-    const result = await this.ctx.service.api.destroy(this.ctx.params);
+    const result = await this.ctx.service.apiAuth.destroy(this.ctx.params);
     if (result.affectedRows) {
       this.ctx.body = {
         code: 1,
@@ -95,6 +93,24 @@ class ApiController extends Controller {
       };
     }
   }
+  async getApiAuthByIdentityId() {
+    const result = await this.ctx.service.apiAuth.getApiAuthByIdentityId(
+      this.ctx.params
+    );
+    if (result.length) {
+      this.ctx.body = {
+        code: 1,
+        message: "查询成功!",
+        data: result,
+      };
+    } else {
+      this.ctx.body = {
+        code: 0,
+        message: "暂无数据!",
+        data: [],
+      };
+    }
+  }
 }
 
-module.exports = ApiController;
+module.exports = ApiAuthrityController;

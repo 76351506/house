@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2023-07-20 19:06:56
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-24 10:09:08
+ * @Last Modified time: 2023-07-24 11:40:55
  */
 
 module.exports = (app) => {
@@ -15,9 +15,17 @@ module.exports = (app) => {
   // router.post("/set/audit", controller.audit.setAudit);
   router.resources("audit", "/api/v1/audit", controller.audit);
   router.resources("identity", "/api/v1/identity", controller.identity);
-  router.get("/getIdentityById/:id", controller.identity.getIdentityById);
   router.resources("api", "/api/v1/api", controller.api);
   router.resources("view", "/api/v1/view", controller.view);
+  router.resources("apiAuth", "/api/v1/apiAuth", controller.apiAuth);
+  router.resources("viewAuth", "/api/v1/viewAuth", controller.viewAuth);
+
+  // 根据用户id获取用户身份
+  router.get("/getIdentityById/:id", controller.identity.getIdentityById);
+  // 根据用户id对应的身份权限identity_id获取对应的视图权限
+  router.get("/getViewAuthByIdentityId/:id", controller.viewAuth.getViewAuthByIdentityId);
+  // 根据用户id对应的身份权限identity_id获取对应的接口权限
+  router.get("/getApiAuthByIdentityId/:id", controller.apiAuth.getApiAuthByIdentityId);
 
   // 用户接口
   router.post("/user/login", controller.user.login);
