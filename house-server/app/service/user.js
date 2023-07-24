@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2023-07-24 00:24:57
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-24 14:13:54
+ * @Last Modified time: 2023-07-24 15:12:29
  */
 "use strict";
 
@@ -85,6 +85,19 @@ class UserService extends Service {
   async identiryList() {
     const $sql = "select * from `identity`";
     return await this.ctx.app.mysql.query($sql);
+  }
+
+  // 根据用户的id和api接口判断用户是否具有该权限
+  async isUserApiAuthority({ url, method, id }) {
+    let sql = ` SELECT * FROM api_authority,identity_api_authority_relation,identity,login 
+    where api_authority.api_authority_url='${url}'
+    And api_authority.api_authority_method='${method}'
+    And api_authority.api_authority_id=identity_api_authority_relation.api_authority_id
+    And login.id='${id}'
+    And login.identity_id=identity.identity_id 
+    And identity.identity_id=identity_api_authority_relation.identity_id`;
+    const result = await this.app.mysql.query(sql);
+    return result.length > 0;
   }
 }
 
