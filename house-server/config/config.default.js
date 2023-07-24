@@ -2,14 +2,15 @@
  * @Author: heinan
  * @Date: 2023-07-21 10:40:26
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-23 22:59:29
+ * @Last Modified time: 2023-07-24 14:56:56
  */
 "use strict";
+const { routeCreator } = require("../app/utils");
 
 module.exports = (appInfo) => {
   const config = (exports = {});
   config.keys = appInfo.name + "_1636591141914_4788";
-  config.middleware = [];
+  config.middleware = ["responseTime", "checkLogin"];
   config.security = {
     csrf: {
       enable: false,
@@ -39,6 +40,21 @@ module.exports = (appInfo) => {
       allow_origin: "*",
     },
   };
+  // 超级白名单，登录和身份都不需要验证
+  config.whiteList = [
+    routeCreator("/user/login", "POST"),
+    routeCreator(/^\/user\/getAuthInfo\/*/, "any"), //获取权限信息
+    routeCreator(/^\/user\/delAutho\/*/, "any"), // 删除权限信息
+    routeCreator("/user/cancelIdentityApi", "POST"), //取消身份的api接口权限
+    routeCreator("/user/cancelIdentityView", "POST"), //取消身份的视图接口权限
+  ];
+  // 身份白名单，不需要验证身份
+  config.identityWhiteList = [
+    // 学生登陆
+    // route(/^\/student\/*/, "any"),
+  ];
+  // 登录白名单，不需要验证登录
+  config.loginWhiteList = [];
 
   return config;
 };

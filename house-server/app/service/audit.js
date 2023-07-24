@@ -2,15 +2,13 @@
  * @Author: heinan
  * @Date: 2020-07-16 11:33:19
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-24 00:10:17
+ * @Last Modified time: 2023-07-24 13:33:43
  */
 "use strict";
-
 const { Service } = require("egg");
 
 class AuditService extends Service {
   /**
-   *
    * @param province String 省份
    * @param city String 省份
    * @param county String 省份

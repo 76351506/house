@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2023-07-24 00:24:57
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-24 00:47:29
+ * @Last Modified time: 2023-07-24 14:13:54
  */
 "use strict";
 
@@ -42,7 +42,6 @@ class UserService extends Service {
       "select * from user where email=?",
       [email]
     );
-    console.log(res);
     const $params = [pwd, res[0].uid];
     const $sql = "update login set password=?  where uid=?";
     return await this.ctx.app.mysql.query($sql, $params);

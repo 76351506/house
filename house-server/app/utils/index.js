@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2023-07-23 22:55:13
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-24 01:03:02
+ * @Last Modified time: 2023-07-24 14:53:48
  */
 const crypto = require("crypto");
 const jsonwebtoken = require("jsonwebtoken");
@@ -30,8 +30,17 @@ const tokenCreator = (id, exp) => {
  * @param {token:token,SECRET:秘钥}
  * @return {解密后用户信息}
  */
-const veriftyToken = (token) => {
-  return jsonwebtoken.verify(token, TOKEN_SECRET);
+
+const verifyToken = (token) => {
+  return new Promise((reslove, reject) => {
+    jsonwebtoken.verify(token, TOKEN_SECRET, (err, info) => {
+      if (!err) {
+        reslove(info);
+      } else {
+        reject(err);
+      }
+    });
+  });
 };
 
 /**
@@ -50,9 +59,14 @@ const idCreator = () => {
   return uuidv4();
 };
 
+const routeCreator = (url, method) => {
+  return { url, method };
+};
+
 module.exports = {
   idCreator,
+  routeCreator,
   tokenCreator,
   passwordCreator,
-  veriftyToken,
+  verifyToken,
 };

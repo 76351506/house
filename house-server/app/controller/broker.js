@@ -2,78 +2,102 @@
  * @Author: heinan
  * @Date: 2023-07-23 22:51:39
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-23 23:00:20
+ * @Last Modified time: 2023-07-24 14:22:53
  */
 "use strict";
 const { Controller } = require("egg");
 
 class Broker extends Controller {
-  async broker() {
-    const { ctx } = this;
-    const {
-      telName = "",
-      state = "", // , pageSize = "10", pageCount = "1"
-    } = ctx.query;
-    const data = await this.app.mysql.query(
-      `SELECT * FROM brokers WHERE (name LIKE '%${telName}%' or tel LIKE '%${telName}%') and state LIKE '%${state}%' ORDER BY id DESC`
-    ); // limit ${(pageCount-1)*pageSize},${pageCount*pageSize}
-    ctx.body = {
-      code: 200,
-      data: data.length ? data : false,
-    };
-  }
-  async delBroker() {
-    const { ctx } = this;
-    const { id } = ctx.query;
-    await this.app.mysql.delete("brokers", {
-      id,
-    });
-    ctx.body = {
-      code: 200,
-      message: "删除成功",
-    };
-  }
-  // 修改经纪人状态接口
-  async setBrokerStatus() {
-    const { ctx } = this;
-    const { content } = ctx.request.body;
-    let res = await this.app.mysql.update("brokers", content);
-    if (res.affectedRows) {
-      ctx.body = {
-        code: 200,
-        message: "修改成功",
+  async index() {
+    console.log(this.ctx.query);
+    try {
+      this.ctx.validate(
+        {
+          currentPage: "string",
+          pageSize: "string",
+        },
+        this.ctx.query
+      );
+    } catch (err) {
+      this.ctx.status = 406;
+      return (this.ctx.body = {
+        code: 0,
+        error: err.errors,
+      });
+    }
+    const result = await this.ctx.service.broker.index(this.ctx.query);
+    if (result.length) {
+      this.ctx.body = {
+        code: 1,
+        msg: "查询成功！",
+        data: result,
+      };
+    } else {
+      this.ctx.body = {
+        code: 0,
+        msg: "暂无数据！",
+        data: [],
       };
     }
   }
-  // 添加经纪人状态接口
-  async putBroker() {
-    const { ctx } = this;
-    const {
-      name,
-      tel,
-      company,
-      created_at,
-      updated_at,
-      new_house,
-      second_hand_house,
-      renting,
-      state,
-    } = ctx.request.body;
-    await this.app.mysql.insert("brokers", {
-      name,
-      tel,
-      company,
-      created_at,
-      updated_at,
-      new_house,
-      second_hand_house,
-      renting,
-      state,
+
+  async destory() {
+    const result = await this.ctx.service.broker.destroy(this.ctx.params);
+    if (result.affectedRows) {
+      this.ctx.body = {
+        code: 1,
+        message: "删除成功！",
+      };
+    } else {
+      this.ctx.body = {
+        code: 0,
+        message: "删除失败！",
+      };
+    }
+  }
+  async update() {
+    const result = await this.ctx.service.broker.update({
+      ...this.ctx.params,
+      ...this.ctx.request.body,
     });
-    ctx.body = {
-      code: 200,
-      message: "插入成功",
-    };
+    if (result.affectedRows) {
+      ctx.body = {
+        code: 1,
+        message: "修改成功！",
+      };
+    } else {
+      ctx.body = {
+        code: 0,
+        message: "修改失败！",
+      };
+    }
+  }
+  async create() {
+    try {
+      this.ctx.validate({
+        name: "string",
+        mobile: "string",
+        company: "string",
+      });
+    } catch (err) {
+      this.ctx.status = 406;
+      return (this.ctx.body = {
+        code: 0,
+        error: err.errors,
+      });
+    }
+    const result = await this.ctx.service.broker.create(this.ctx.request.body);
+    if (result.affectedRows) {
+      ctx.body = {
+        code: 1,
+        message: "插入成功！",
+      };
+    } else {
+      ctx.body = {
+        code: 0,
+        message: "插入失败！",
+      };
+    }
   }
 }
 

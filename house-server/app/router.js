@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2023-07-20 19:06:56
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-24 11:40:55
+ * @Last Modified time: 2023-07-24 13:34:49
  */
 
 module.exports = (app) => {
@@ -19,13 +19,29 @@ module.exports = (app) => {
   router.resources("view", "/api/v1/view", controller.view);
   router.resources("apiAuth", "/api/v1/apiAuth", controller.apiAuth);
   router.resources("viewAuth", "/api/v1/viewAuth", controller.viewAuth);
+  router.resources("broker", "/api/v1/broker", controller.broker);
 
   // 根据用户id获取用户身份
   router.get("/getIdentityById/:id", controller.identity.getIdentityById);
   // 根据用户id对应的身份权限identity_id获取对应的视图权限
-  router.get("/getViewAuthByIdentityId/:id", controller.viewAuth.getViewAuthByIdentityId);
+  router.get(
+    "/getViewAuthByIdentityId/:id",
+    controller.viewAuth.getViewAuthByIdentityId
+  );
   // 根据用户id对应的身份权限identity_id获取对应的接口权限
-  router.get("/getApiAuthByIdentityId/:id", controller.apiAuth.getApiAuthByIdentityId);
+  router.get(
+    "/getApiAuthByIdentityId/:id",
+    controller.apiAuth.getApiAuthByIdentityId
+  );
+
+  // 获取经纪人列表
+  // router.get("/broker", controller.broker.broker);
+  // // 删除经纪人列表
+  // router.delete("/del/broker", controller.broker.delBroker);
+  // // 修改经纪人状态接口
+  // router.post("/set/BrokerStatus", controller.broker.setBrokerStatus);
+  // // 添加经纪人状态接口
+  // router.put("/add/Broker", controller.broker.putBroker);
 
   // 用户接口
   router.post("/user/login", controller.user.login);
@@ -37,14 +53,7 @@ module.exports = (app) => {
   router.delete("/delUser", controller.userInfo.delUser);
   // 获取左侧菜单栏数据
   router.get("/sider", controller.home.sider);
-  // 获取经纪人列表
-  router.get("/broker", controller.broker.broker);
-  // 删除经纪人列表
-  router.delete("/del/broker", controller.broker.delBroker);
-  // 修改经纪人状态接口
-  router.post("/set/BrokerStatus", controller.broker.setBrokerStatus);
-  // 添加经纪人状态接口
-  router.put("/add/Broker", controller.broker.putBroker);
+
   // 获取资讯列表
   router.get("/information", controller.information.information);
   // 资讯管理删除接口
