@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2023-07-17 15:24:42
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-19 21:42:51
+ * @Last Modified time: 2023-07-24 17:32:16
  */
 
 export namespace CommonManageType {
@@ -28,5 +28,12 @@ export namespace CommonManageType {
   export interface FileInfo {
     file: FileItem | undefined
     fileList: FileItem[] | undefined
+  }
+  export interface CommonAxiosResponse<T> {
+    code: number
+    data: Array<T>
+    msg?: string
+    total: number
+    currentPage: number
   }
 }
