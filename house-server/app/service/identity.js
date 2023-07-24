@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2020-07-16 11:33:19
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-24 09:10:16
+ * @Last Modified time: 2023-07-24 10:12:39
  */
 "use strict";
 
@@ -25,6 +25,11 @@ class IdentityService extends Service {
     const $data = { identity_text };
     const $options = { where: { identity_id: id } };
     return await this.app.mysql.update("identity", $data, $options);
+  }
+  async getIdentityById({ id }) {
+    const $sql = `SELECT login.id,login.username,login.identity_id,identity.identity_text FROM login,identity WHERE login.identity_id=identity.identity_id AND login.id='${id}'`;
+    console.log($sql);
+    return await this.app.mysql.query($sql);
   }
 }
 

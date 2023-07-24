@@ -2,14 +2,14 @@
  * @Author: heinan
  * @Date: 2023-07-23 22:50:43
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-24 10:14:13
+ * @Last Modified time: 2023-07-24 09:42:44
  */
 "use strict";
 const { Controller } = require("egg");
 
-class IdentityController extends Controller {
+class ViewController extends Controller {
   async index() {
-    const result = this.ctx.service.identity.index();
+    const result = this.ctx.service.view.index();
     if (result.length) {
       this.ctx.body = {
         code: 1,
@@ -25,10 +25,19 @@ class IdentityController extends Controller {
     }
   }
   async create() {
-    const result = await this.ctx.service.identity.create(
-      this.ctx.request.body
-    );
-    console.log(result);
+    try {
+      this.ctx.validate({
+        view_authority_text: "string",
+        view_name: "string",
+      });
+    } catch (err) {
+      this.ctx.status = 406;
+      return (this.ctx.body = {
+        code: 0,
+        error: err.errors,
+      });
+    }
+    const result = await this.ctx.service.view.create(this.ctx.request.body);
     if (result.affectedRows) {
       this.ctx.body = {
         code: 1,
@@ -42,7 +51,19 @@ class IdentityController extends Controller {
     }
   }
   async update() {
-    const result = await this.ctx.service.identity.update({
+    try {
+      this.ctx.validate({
+        view_authority_text: "string",
+        view_name: "string",
+      });
+    } catch (err) {
+      this.ctx.status = 406;
+      return (this.ctx.body = {
+        code: 0,
+        error: err.errors,
+      });
+    }
+    const result = await this.ctx.service.view.update({
       ...this.ctx.params,
       ...this.ctx.request.body,
     });
@@ -59,7 +80,7 @@ class IdentityController extends Controller {
     }
   }
   async destroy() {
-    const result = await this.ctx.service.identity.destroy(this.ctx.params);
+    const result = await this.ctx.service.view.destroy(this.ctx.params);
     if (result.affectedRows) {
       this.ctx.body = {
         code: 1,
@@ -72,26 +93,6 @@ class IdentityController extends Controller {
       };
     }
   }
-  // 根据login.id获得对应的身份呢
-  async getIdentityById() {
-    const result = await this.ctx.service.identity.getIdentityById(
-      this.ctx.params
-    );
-    console.log(result);
-    if (result.length) {
-      this.ctx.body = {
-        code: 1,
-        message: "查询成功!",
-        data: result,
-      };
-    } else {
-      this.ctx.body = {
-        code: 0,
-        message: "暂无数据!",
-        data: [],
-      };
-    }
-  }
 }
 
-module.exports = IdentityController;
+module.exports = ViewController;

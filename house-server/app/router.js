@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2023-07-20 19:06:56
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-24 08:46:59
+ * @Last Modified time: 2023-07-24 10:09:08
  */
 
 module.exports = (app) => {
@@ -13,8 +13,11 @@ module.exports = (app) => {
   // router.get("/audit", controller.audit.audit);
   // router.delete("/audit", controller.audit.delAudit);
   // router.post("/set/audit", controller.audit.setAudit);
-  router.resources("audit", "/api/v1/audit", app.controller.audit);
-  router.resources("identity", "/api/v1/identity", app.controller.identity);
+  router.resources("audit", "/api/v1/audit", controller.audit);
+  router.resources("identity", "/api/v1/identity", controller.identity);
+  router.get("/getIdentityById/:id", controller.identity.getIdentityById);
+  router.resources("api", "/api/v1/api", controller.api);
+  router.resources("view", "/api/v1/view", controller.view);
 
   // 用户接口
   router.post("/user/login", controller.user.login);
