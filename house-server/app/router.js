@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2023-07-20 19:06:56
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-24 00:45:37
+ * @Last Modified time: 2023-07-24 08:46:59
  */
 
 module.exports = (app) => {
@@ -14,6 +14,7 @@ module.exports = (app) => {
   // router.delete("/audit", controller.audit.delAudit);
   // router.post("/set/audit", controller.audit.setAudit);
   router.resources("audit", "/api/v1/audit", app.controller.audit);
+  router.resources("identity", "/api/v1/identity", app.controller.identity);
 
   // 用户接口
   router.post("/user/login", controller.user.login);
