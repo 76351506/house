@@ -1,0 +1,22 @@
+.btn {
+  height: 30px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.btn-default {
+  background-color: #fff;
+}
+
+.btn-danger {
+  color: #fff;
+  background-color: #f00;
+}
+
+.btn-large {
+  height: 35px;
+  padding-left: 15px;
+  padding-right: 15px;
+}

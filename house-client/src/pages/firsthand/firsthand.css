@@ -1,0 +1,21 @@
+.scroll-bar {
+  width: 30px;
+  height: 80%;
+  box-sizing: border-box;
+  z-index: 999;
+  word-wrap: break-word;
+  word-break: break-all;
+  float: right;
+  position: relative;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+
+.scroll-bar .scroller-wraper {
+  background-color: #fff !important;
+}
+
+.current {
+  color: red;
+  font-weight: 700;
+}
