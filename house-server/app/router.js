@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2023-07-20 19:06:56
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-25 20:12:43
+ * @Last Modified time: 2023-07-25 20:15:04
  */
 
 module.exports = (app) => {
@@ -57,6 +57,30 @@ module.exports = (app) => {
 
   // 获取左侧菜单栏数据
   router.get("/sider", controller.home.sider);
+
+  //部门管理
+  router.get("/staff/portList", controller.staff.Portlist); //获取部门列表
+  router.get("/staff/portDel", controller.staff.delPort); //删除部门
+  router.post("/staff/portAdd", controller.staff.PortAdd); //添加部门
+  router.get("/staff/portSearch", controller.staff.portSearch); //查找部门
+  router.post("/staff/portEdit", controller.staff.PortEdit); //添加部门
+  //员工管理
+  router.get("/staff/staffList", controller.staff.Stafflist); //获取员工列表
+  router.get("/staff/staffDel", controller.staff.delStaff); //删除员工
+  router.post("/staff/staffAdd", controller.staff.StaffAdd); //添加员工
+  router.get("/staff/staffSearch", controller.staff.staffSearch); //查找员工
+  router.post("/staff/staffEdit", controller.staff.StaffEdit); //添加员工
+
+  // 获取资讯列表
+  router.get("/information", controller.information.information);
+  // 资讯管理删除接口
+  router.delete("/del/information", controller.information.delInformation);
+  // 修改资讯状态接口
+  router.post("/set/information", controller.information.setInformation);
+  // 获取订单列表
+  router.get("/order", controller.order.order);
+  // 订单管理删除接口
+  router.delete("/del/order", controller.order.delOrder);
 
   // 获取房源列表
   router.get("/housing", controller.housing.housing);

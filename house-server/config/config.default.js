@@ -1,8 +1,8 @@
 /*
  * @Author: heinan
  * @Date: 2023-07-21 10:40:26
- * @Last Modified by: zhiwei
- * @Last Modified time: 2023-07-25 19:04:40
+ * @Last Modified by: heinan
+ * @Last Modified time: 2023-07-25 20:15:35
  */
 "use strict";
 const { routeCreator } = require("../app/utils");
@@ -19,7 +19,6 @@ module.exports = (appInfo) => {
   };
   config.mysql = {
     client: {
-      // host: "localhost",
       host: "10.37.7.101",
       port: "3306",
       user: "root",
