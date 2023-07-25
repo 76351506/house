@@ -20,7 +20,7 @@ module.exports = (app) => {
   router.resources("apiAuth", "/api/v1/apiAuth", controller.apiAuth);
   router.resources("viewAuth", "/api/v1/viewAuth", controller.viewAuth);
   router.resources("broker", "/api/v1/broker", controller.broker);
-
+  router.resources("group", "/api/v1/group", controller.group);
   // 根据用户id获取用户身份
   router.get("/getIdentityById/:id", controller.identity.getIdentityById);
   // 根据用户id对应的身份权限identity_id获取对应的视图权限
@@ -74,12 +74,12 @@ module.exports = (app) => {
   router.post("/setRentHouseStatus", controller.housing.setRentHouseStatus);
   // 修改房源管理房屋租赁经纪人数据接口
   router.post("/alterRentBroker", controller.housing.alterRentBroker);
-  // 获取团购列表
-  router.get("/group", controller.group.group);
-  // 删除团购列表
-  router.delete("/del/group", controller.group.delGroup);
-  // 设置团购列表
-  router.post("/set/group", controller.group.setGroup);
+  // // 获取团购列表
+  // router.get("/group", controller.group.group);
+  // // 删除团购列表
+  // router.delete("/del/group", controller.group.delGroup);
+  // // 设置团购列表
+  // router.post("/set/group", controller.group.setGroup);
   // 获取直播列表
   router.get("/live", controller.live.live);
   // 删除直播
