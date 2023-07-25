@@ -2,14 +2,14 @@
  * @Author: heinan
  * @Date: 2023-07-23 22:50:43
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-24 09:42:44
+ * @Last Modified time: 2023-07-25 10:52:08
  */
 "use strict";
 const { Controller } = require("egg");
 
 class ViewController extends Controller {
   async index() {
-    const result = this.ctx.service.view.index();
+    const result = await this.ctx.service.view.index();
     if (result.length) {
       this.ctx.body = {
         code: 1,
