@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2023-07-17 15:10:49
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-25 10:30:47
+ * @Last Modified time: 2023-07-25 10:33:34
  */
 import { RouteRecordRaw } from 'vue-router'
 import { UserManage } from '@/router/routes/user'
@@ -78,5 +78,15 @@ export const routes: Array<RouteRecordRaw> = [
     path: '/settings/authority',
     name: 'Authorition',
     component: () => import(/* webpackChunkName: "Settings" */ '@/views/settings/authority/index.vue')
+  },
+  {
+    path: '/settings/authority/view',
+    name: 'ViewManage',
+    component: () => import(/* webpackChunkName: "Settings" */ '@/views/settings/authority/view.vue')
+  },
+  {
+    path: '/settings/authority/api',
+    name: 'ApiManage',
+    component: () => import(/* webpackChunkName: "Settings" */ '@/views/settings/authority/api.vue')
   }
 ]
