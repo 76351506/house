@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2020-07-16 11:33:19
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-24 09:47:54
+ * @Last Modified time: 2023-07-25 17:12:41
  */
 "use strict";
 
@@ -22,6 +22,11 @@ class ApiService extends Service {
       api_authority_id: idCreator(),
     };
     return await this.app.mysql.insert("api_authority", $data);
+  }
+  async show({ id }) {
+    return await this.app.mysql.get("api_authority", {
+      api_authority_id: id,
+    });
   }
   async index() {
     return await this.app.mysql.select("api_authority");
