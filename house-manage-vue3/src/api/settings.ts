@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2023-07-25 10:39:07
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-25 11:55:50
+ * @Last Modified time: 2023-07-25 16:36:33
  */
 
 import { request } from '@/utils/request'
@@ -14,10 +14,37 @@ import { SettingsManageType } from '@/interface/model/settings'
 interface SettingsManageServiceInterface {
   list(): Promise<CommonManageType.CommonAxiosResponse<SettingsManageType.ViewState>>
   add(params: SettingsManageType.ViewState): Promise<CommonManageType.CommonAxiosResponse<any>>
+  edit(params: SettingsManageType.ViewState): Promise<CommonManageType.CommonAxiosResponse<any>>
+  detail(id: string): Promise<CommonManageType.CommonAxiosResponse<any>>
+  delete(id: string): Promise<CommonManageType.CommonAxiosResponse<any>>
 }
 
 export const useSettingsManageService = (): SettingsManageServiceInterface => {
   class SettingsManageService {
+    @LoadingDecorator(true)
+    public async delete(id: string) {
+      const url = API_SETTINGS.list() + `/${id}`
+      return request
+        .delete(url)
+        .then(({ data }) => {
+          return Promise.resolve(data)
+        })
+        .catch(err => {
+          return Promise.reject(err)
+        })
+    }
+    @LoadingDecorator(true)
+    public async detail(id: string) {
+      const url = API_SETTINGS.list() + `/${id}`
+      return request
+        .get(url)
+        .then(({ data }) => {
+          return Promise.resolve(data)
+        })
+        .catch(err => {
+          return Promise.reject(err)
+        })
+    }
     @LoadingDecorator(true)
     public async list() {
       const url = API_SETTINGS.list()
@@ -35,6 +62,18 @@ export const useSettingsManageService = (): SettingsManageServiceInterface => {
       const url = API_SETTINGS.list()
       return request
         .post(url, params)
+        .then(({ data }) => {
+          return Promise.resolve(data)
+        })
+        .catch(err => {
+          return Promise.reject(err)
+        })
+    }
+    @LoadingDecorator(true)
+    public async edit(params: SettingsManageType.ViewState) {
+      const url = API_SETTINGS.list() + `/:${params.view_authority_id}`
+      return request
+        .put(url, params)
         .then(({ data }) => {
           return Promise.resolve(data)
         })

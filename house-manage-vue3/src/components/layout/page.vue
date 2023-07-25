@@ -21,9 +21,9 @@
   }
   .layout-page-pagination {
     margin-top: 16px;
-    padding: 16px;
     background-color: #fff;
     & > ul {
+      padding: 16px;
       text-align: right;
     }
   }

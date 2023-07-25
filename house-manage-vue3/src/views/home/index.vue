@@ -31,11 +31,11 @@
         <span v-else-if="text == null">-</span>
         <span v-else>{{ text }}</span>
       </template>
-      <template #action="{ text, recoed }">
+      <template #action="{ recoed }">
         <span>
           <a>删除</a>
           <a-divider type="vertical" />
-          <a>编辑</a>
+          <a @click="onEdit(recoed.id)">编辑</a>
           <a-divider type="vertical" />
           <a>修改</a>
         </span>
@@ -125,6 +125,9 @@ const onChange = (current: number, pageSize: number) => {
   formState.value.currentPage = current
   formState.value.pageSize = pageSize
   getAuditList()
+}
+const onEdit = (id: string) => {
+  console.log(id)
 }
 </script>
 <style lang="less"></style>

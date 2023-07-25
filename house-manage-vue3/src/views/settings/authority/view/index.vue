@@ -1,22 +1,22 @@
 <template>
   <LayoutPage>
     <template #layout-page-search>
-      <a-button @click="openModel(true)">添加</a-button>
+      <a-button @click="openModel('create', '新建')">添加</a-button>
     </template>
     <template #default>
       <div>
         <a-table :dataSource="viewList" :columns="columns" :pagination="false" :rowKey="(record:SettingsManageType.view_authority_id) => record.id">
-          <template #action="{ text, recoed }">
+          <template #action="{ text, record }">
             <span>
-              <a>删除</a>
+              <a @click="openModel('edit', '编辑', record.view_authority_id)">编辑</a>
               <a-divider type="vertical" />
-              <a>编辑</a>
-              <a-divider type="vertical" />
-              <a>修改</a>
+              <a-popconfirm title="确认删除吗？" ok-text="确认" cancel-text="取消" @confirm="() => confirm(record.view_authority_id)" @cancel="cancel">
+                <a href="#">删除</a>
+              </a-popconfirm>
             </span>
           </template>
         </a-table>
-        <a-modal destroyOnClose v-model:visible="visible" @ok="handleOk">
+        <a-modal destroyOnClose v-model:visible="visible" :title="title" @ok="handleOk">
           <ViewForm ref="formRef"></ViewForm>
         </a-modal>
       </div>
@@ -24,7 +24,8 @@
   </LayoutPage>
 </template>
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
+import { useStore } from 'vuex'
 import { useSettingsManageService } from '@/api/settings'
 import { SettingsManageType } from '@/interface/model/settings'
 import { ValidateErrorEntity } from 'ant-design-vue/es/form/interface'
@@ -49,13 +50,19 @@ const columns = [
     slots: { customRender: 'action' }
   }
 ]
+const store = useStore()
 const settingsManageService = useSettingsManageService()
 const formRef = ref()
 const viewList = ref<Array<SettingsManageType.ViewState>>([])
 const visible = ref<boolean>(false)
+const title = computed(() => store.state.settings.modelTitle)
 
-const openModel = (flag: boolean) => {
-  visible.value = flag
+const openModel = (type: string, title: string, id: string) => {
+  visible.value = true
+  store.dispatch({ type: 'settings/SAVE_MODEL_TYPE', payload: type })
+  store.dispatch({ type: 'settings/SAVE_MODEL_TITLE', payload: title })
+  if (!id) return
+  store.dispatch({ type: 'settings/SAVE_ID', payload: id })
 }
 const handleOk = () => {
   formRef.value.formRef
@@ -83,6 +90,24 @@ const getViewList = async () => {
   viewList.value = result.data
 }
 
+const confirm = async (id: string) => {
+  //
+  const result = await settingsManageService.delete(id)
+  if (result.code) {
+    message.success(result.message, 1, () => {
+      getViewList()
+    })
+  } else {
+    message.error(result.message, 1, () => {
+      getViewList()
+    })
+  }
+}
+
+const cancel = (e: MouseEvent) => {
+  console.log(e)
+  message.error('Click on No')
+}
 onMounted(() => {
   getViewList()
 })
