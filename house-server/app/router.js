@@ -74,12 +74,6 @@ module.exports = (app) => {
   router.post("/setRentHouseStatus", controller.housing.setRentHouseStatus);
   // 修改房源管理房屋租赁经纪人数据接口
   router.post("/alterRentBroker", controller.housing.alterRentBroker);
-  // // 获取团购列表
-  // router.get("/group", controller.group.group);
-  // // 删除团购列表
-  // router.delete("/del/group", controller.group.delGroup);
-  // // 设置团购列表
-  // router.post("/set/group", controller.group.setGroup);
   // 获取直播列表
   router.get("/live", controller.live.live);
   // 删除直播
