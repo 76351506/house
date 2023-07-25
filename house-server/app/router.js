@@ -43,7 +43,18 @@ module.exports = (app) => {
   router.delete("/delUser", controller.userInfo.delUser);
   // 获取左侧菜单栏数据
   router.get("/sider", controller.home.sider);
-
+  //部门管理
+  router.get("/staff/portList", controller.staff.Portlist); //获取部门列表
+  router.get("/staff/portDel", controller.staff.delPort); //删除部门
+  router.post("/staff/portAdd", controller.staff.PortAdd); //添加部门
+  router.get("/staff/portSearch", controller.staff.portSearch); //查找部门
+  router.post("/staff/portEdit", controller.staff.PortEdit); //添加部门
+  //员工管理
+  router.get("/staff/staffList", controller.staff.Stafflist); //获取员工列表
+  router.get("/staff/staffDel", controller.staff.delStaff); //删除员工
+  router.post("/staff/staffAdd", controller.staff.StaffAdd); //添加员工
+  router.get("/staff/staffSearch", controller.staff.staffSearch); //查找员工
+  router.post("/staff/staffEdit", controller.staff.StaffEdit); //添加员工
   // 获取资讯列表
   router.get("/information", controller.information.information);
   // 资讯管理删除接口
