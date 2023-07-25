@@ -37,7 +37,6 @@ module.exports = (app) => {
   // 用户接口
   router.post("/user/login", controller.user.login);
   router.post("/user/registry", controller.user.registry);
-
   // 获取用户列表
   router.get("/userInfo", controller.userInfo.userInfo);
   // 删除用户
