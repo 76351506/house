@@ -5,7 +5,9 @@
  * @Last Modified time: 2023-07-24 17:29:51
  */
 "use strict";
-const { Controller } = require("egg");
+const {
+  Controller
+} = require("egg");
 
 // 审核管理
 class AuditController extends Controller {

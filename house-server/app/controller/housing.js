@@ -5,69 +5,83 @@
  * @Last Modified time: 2023-07-23 23:00:05
  */
 "use strict";
-const { Controller } = require("egg");
+const {
+  Controller
+} = require("egg");
 
 class Housing extends Controller {
   async housing() {
-    const { ctx } = this;
-    let { area = "", name = "", pageCount = 1, pageSize = 10 } = ctx.query;
-    area = area.replace(/(区|县)/, "");
-    const house = await this.app.mysql.query("SELECT * FROM renthouses");
-    const data = await this.app.mysql.query(
-      `SELECT * FROM renthouses WHERE quyu LIKE '%${area}%' AND name LIKE '%${name}%' limit ${
-        (pageCount - 1) * pageSize
-      },${pageSize}`
-    );
-    ctx.body = {
-      code: 200,
-      data: data.length ? data : false,
-      total: house.length,
-    };
+    const result = await this.ctx.service.housing.index(this.ctx.query);
+    if (result.data.length) {
+      this.ctx.body = {
+        code: 1,
+        msg: "查询成功！",
+        ...result,
+      };
+    } else {
+      this.ctx.body = {
+        code: 0,
+        msg: "暂无数据！",
+        data: [],
+      };
+    }
   }
 
   // 删除房源管理销售楼盘数据接口
   async deleteMarkethouses() {
-    const { ctx } = this;
-    const { id } = ctx.query;
-    await this.app.mysql.delete("renthouses", {
-      id,
-    });
-    ctx.body = {
-      code: 200,
-      message: "删除成功",
-    };
+    const result = await this.ctx.service.housing.destroy(this.ctx.query);
+    if (result.affectedRows) {
+      this.ctx.body = {
+        code: 1,
+        message: "删除成功！",
+      };
+    } else {
+      this.ctx.body = {
+        code: 0,
+        message: "删除失败！",
+      };
+    }
   }
 
   // 修改房源管理销售楼盘状态接口
   async setMarketHouseStatus() {
-    const { ctx } = this;
-    const { id, status } = ctx.request.body;
-    await this.app.mysql.update("renthouses", {
-      id,
-      status,
-    });
-    ctx.body = {
-      code: 200,
-      message: "修改成功",
-    };
+    awaitthis.ctx.service.housing.update(this.ctx.request.body);
+    if (result.affectedRows) {
+      this.ctx.body = {
+        code: 1,
+        message: "修改成功！",
+      };
+    } else {
+      this.ctx.body = {
+        code: 0,
+        message: "修改失败！",
+      };
+    }
   }
 
   // 获取房源管理页面销售经纪人数据接口
-  async setMarketBroker() {
-    const { ctx } = this;
-    const data = await this.app.mysql.query(
-      `SELECT * FROM brokers WHERE state LIKE '%在职%' order by new_house asc`
-    );
-    ctx.body = {
-      code: 200,
-      data,
-    };
-  }
+  // async setMarketBroker() {
+  //   const {
+  //     ctx
+  //   } = this;
+  //   const data = await this.app.mysql.query(
+  //     `SELECT * FROM brokers WHERE state LIKE '%在职%' order by new_house asc`
+  //   );
+  //   ctx.body = {
+  //     code: 200,
+  //     data,
+  //   };
+  // }
 
   // 修改房源管理页面销售经纪人数据接口
   async alterMarketBroker() {
-    const { ctx } = this;
-    const { id, broker } = ctx.request.body;
+    const {
+      ctx
+    } = this;
+    const {
+      id,
+      broker
+    } = ctx.request.body;
     await this.app.mysql.update("renthouses", {
       id,
       jjr: broker,
@@ -80,8 +94,12 @@ class Housing extends Controller {
 
   // 二手房
   async secondHousing() {
-    const { ctx } = this;
-    let { area = "", name = "", pageCount = 1, pageSize = 10 } = ctx.query;
+    const {
+      ctx
+    } = this;
+    let {
+      area = "", name = "", pageCount = 1, pageSize = 10
+    } = ctx.query;
     area = area.replace(/(区|县)/, "");
     const house = await this.app.mysql.query("SELECT * FROM secondhouses");
     const data = await this.app.mysql.query(
@@ -98,8 +116,12 @@ class Housing extends Controller {
 
   // 删除二手房源管理销售楼盘数据接口
   async deleteRenthouses() {
-    const { ctx } = this;
-    const { id } = ctx.query;
+    const {
+      ctx
+    } = this;
+    const {
+      id
+    } = ctx.query;
     await this.app.mysql.delete("secondhouses", {
       id,
     });
@@ -111,8 +133,13 @@ class Housing extends Controller {
 
   // 修改房源管理房屋租赁状态接口
   async setRentHouseStatus() {
-    const { ctx } = this;
-    const { id, status } = ctx.request.body;
+    const {
+      ctx
+    } = this;
+    const {
+      id,
+      status
+    } = ctx.request.body;
     await this.app.mysql.update("secondhouses", {
       id,
       status,
@@ -124,8 +151,13 @@ class Housing extends Controller {
   }
   // 修改房源管理房屋租赁经纪人数据接口
   async alterRentBroker() {
-    const { ctx } = this;
-    const { id, broker } = ctx.request.body;
+    const {
+      ctx
+    } = this;
+    const {
+      id,
+      broker
+    } = ctx.request.body;
     await this.app.mysql.update("secondhouses", {
       id,
       jjr: broker,
@@ -139,14 +171,16 @@ class Housing extends Controller {
   // ----------------------------客户端-------------------------------- //
   //获取租房数据
   async getRenting() {
-    const { ctx } = this;
+    const {
+      ctx
+    } = this;
     let {
       zf = "",
-      quyu = "",
-      jiage,
-      page = 1,
-      pageNum = 50,
-      xq = "",
+        quyu = "",
+        jiage,
+        page = 1,
+        pageNum = 50,
+        xq = "",
     } = ctx.query;
     // 转换数据格式(get请求会将对象转为字符串)
     zf = zf === "不限" ? "" : zf;
@@ -180,8 +214,7 @@ class Housing extends Controller {
       );
     }
     // 筛选类型
-    var typeArr = [
-      {
+    var typeArr = [{
         title: "户型",
         children: [],
         id: createRandomId(),
@@ -207,31 +240,27 @@ class Housing extends Controller {
       var type;
       switch (i) {
         // 房型
-        case 0:
-          {
-            type = "fangxing";
-          }
-          break;
+        case 0: {
+          type = "fangxing";
+        }
+        break;
         // 朝向
-        case 1:
-          {
-            type = "cx";
-          }
-          break;
-        // 楼层
-        case 2:
-          {
-            type = "lz";
-          }
-          break;
-        // 亮点
-        case 3:
-          {
-            type = "ts";
-          }
-          break;
-        default:
-          return;
+      case 1: {
+        type = "cx";
+      }
+      break;
+      // 楼层
+      case 2: {
+        type = "lz";
+      }
+      break;
+      // 亮点
+      case 3: {
+        type = "ts";
+      }
+      break;
+      default:
+        return;
       }
       // 获取去重后的数组并放入定义的数组中
       [...new Set(data.map((item) => item[type]))].forEach((v) => {
@@ -254,8 +283,12 @@ class Housing extends Controller {
     };
   }
   async getDetail() {
-    const { ctx } = this;
-    let { id } = ctx.query;
+    const {
+      ctx
+    } = this;
+    let {
+      id
+    } = ctx.query;
     const post = await this.app.mysql.get("renthouses", {
       id,
     });

@@ -5,13 +5,15 @@
  * @Last Modified time: 2023-07-24 16:28:52
  */
 "use strict";
-const { routeCreator } = require("../app/utils");
+const {
+  routeCreator
+} = require("../app/utils");
 
 module.exports = (appInfo) => {
   const config = (exports = {});
   config.keys = appInfo.name + "_1636591141914_4788";
   // config.middleware = ["responseTime", "checkLogin", "checkIdentity", "gzip"];
-  config.middleware = ["responseTime", "checkLogin", "gzip"];
+  // config.middleware = ["responseTime", "checkLogin", "gzip"];
   config.security = {
     csrf: {
       enable: false,
@@ -19,7 +21,7 @@ module.exports = (appInfo) => {
   };
   config.mysql = {
     client: {
-      host: "localhost",
+      host: "10.37.26.179",
       port: "3306",
       user: "root",
       password: "123456",

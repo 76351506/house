@@ -5,7 +5,9 @@
  * @Last Modified time: 2023-07-24 17:34:44
  */
 "use strict";
-const { Service } = require("egg");
+const {
+  Service
+} = require("egg");
 
 class AuditService extends Service {
   /**
@@ -19,7 +21,15 @@ class AuditService extends Service {
    * @returns
    */
 
-  async index({ province, city, county, title, state, currentPage, pageSize }) {
+  async index({
+    province,
+    city,
+    county,
+    title,
+    state,
+    currentPage,
+    pageSize
+  }) {
     const where = {};
     if (province) {
       where.province = province;
@@ -33,11 +43,9 @@ class AuditService extends Service {
     if (title) {
       where.title = title;
     }
-    if (state == "全部") {
-    } else if (state) {
+    if (state == "全部") {} else if (state) {
       where.state = state;
-    } else {
-    }
+    } else {}
     const result = await this.app.mysql.select("controls", {
       where,
       offset: (currentPage - 1) * pageSize,
@@ -51,12 +59,25 @@ class AuditService extends Service {
       currentPage: Number(currentPage),
     };
   }
-  async destroy({ id }) {
-    return await this.app.mysql.delete("controls", { id });
+  async destroy({
+    id
+  }) {
+    return await this.app.mysql.delete("controls", {
+      id
+    });
   }
-  async update({ id, state }) {
-    const $data = { state };
-    const $options = { where: { id } };
+  async update({
+    id,
+    state
+  }) {
+    const $data = {
+      state
+    };
+    const $options = {
+      where: {
+        id
+      }
+    };
     return await this.app.mysql.update("controls", $data, $options);
   }
 }
