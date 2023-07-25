@@ -1,15 +1,14 @@
 /*
  * @Author: heinan
  * @Date: 2023-07-23 22:51:39
- * @Last Modified by: heinan
- * @Last Modified time: 2023-07-24 14:22:53
+ * @Last Modified by: zhiwei
+ * @Last Modified time: 2023-07-25 18:53:17
  */
 "use strict";
 const { Controller } = require("egg");
 
 class Broker extends Controller {
   async index() {
-    console.log(this.ctx.query);
     try {
       this.ctx.validate(
         {

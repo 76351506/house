@@ -1,8 +1,8 @@
 /*
  * @Author: heinan
  * @Date: 2023-07-20 19:06:56
- * @Last Modified by: heinan
- * @Last Modified time: 2023-07-24 16:10:16
+ * @Last Modified by: zhiwei
+ * @Last Modified time: 2023-07-25 18:27:31
  */
 
 module.exports = (app) => {
@@ -20,6 +20,8 @@ module.exports = (app) => {
   router.resources("apiAuth", "/api/v1/apiAuth", controller.apiAuth);
   router.resources("viewAuth", "/api/v1/viewAuth", controller.viewAuth);
   router.resources("broker", "/api/v1/broker", controller.broker);
+  // 资讯列表
+  router.resources("infos", "/api/v1/infos", controller.infos);
 
   // 根据用户id获取用户身份
   router.get("/getIdentityById/:id", controller.identity.getIdentityById);
@@ -46,6 +48,8 @@ module.exports = (app) => {
   router.get("/sider", controller.home.sider);
 
   // 获取资讯列表
+  router.get("/get/information", controller.information.getinformation);
+  //查询咨询接口
   router.get("/information", controller.information.information);
   // 资讯管理删除接口
   router.delete("/del/information", controller.information.delInformation);

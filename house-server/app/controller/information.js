@@ -1,13 +1,26 @@
 /*
  * @Author: heinan
  * @Date: 2023-07-23 22:51:00
- * @Last Modified by: heinan
- * @Last Modified time: 2023-07-23 23:00:34
+ * @Last Modified by: zhiwei
+ * @Last Modified time: 2023-07-25 18:18:34
  */
 "use strict";
 const { Controller } = require("egg");
 
 class Information extends Controller {
+  async getinformation() {
+    const { ctx } = this;
+    const { name, status } = ctx.query;
+    console.log(ctx.query);
+    const data = await this.app.mysql.query(
+      `SELECT * FROM infos WHERE name LIKE '%${name}%' AND status LIKE '%${status}%' ORDER BY id DESC`
+    );
+    ctx.body = {
+      code: 200,
+      data: data.length ? data : false,
+    };
+  }
+  //查询接口
   async information() {
     const { ctx } = this;
     const { name, status } = ctx.query;
