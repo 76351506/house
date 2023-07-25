@@ -14,10 +14,10 @@
     </a-layout-sider>
     <a-layout>
       <LayoutHeader @onQuit="onSignOut"></LayoutHeader>
-      <a-layout-content style="margin: 0 16px">
-        <Breadcrumb></Breadcrumb>
-        <a-divider />
-        <div :style="{ marginTop: '16px', padding: '24px', minHeight: '360px' }">
+      <a-layout-content :style="{ padding: '16px', margin: '0 16px' }">
+        <!-- <Breadcrumb></Breadcrumb>
+        <a-divider /> -->
+        <div :style="{ minHeight: '360px' }">
           <a-spin :spinning="loading" size="large">
             <router-view />
           </a-spin>
@@ -34,7 +34,7 @@ import { useStore } from 'vuex'
 import { defineComponent, ref, computed, watch, onMounted } from 'vue'
 import LayoutSider from '@/components/layout/sider.vue'
 import LayoutHeader from './header.vue'
-import Breadcrumb from './breadcrumb.vue'
+// import Breadcrumb from './breadcrumb.vue'
 import { useUserService } from '@/api/user'
 import { getStorage } from '@/utils/common'
 import { MenuUnfoldOutlined } from '@ant-design/icons-vue'
@@ -43,7 +43,7 @@ import { MenuUnfoldOutlined } from '@ant-design/icons-vue'
 export default defineComponent({
   name: 'Layout',
   components: {
-    Breadcrumb,
+    // Breadcrumb,
     LayoutSider,
     LayoutHeader,
     MenuUnfoldOutlined

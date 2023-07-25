@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2023-07-19 22:03:52
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-21 10:26:50
+ * @Last Modified time: 2023-07-25 09:40:30
  */
 const { defineConfig } = require('@vue/cli-service')
 const dynamicProxyName = process.env.VUE_APP_API_URL
