@@ -14,12 +14,12 @@
 import { useStore } from 'vuex'
 import { ref, defineComponent, onMounted } from 'vue'
 import { SettingsManageType } from '@/interface/model/settings'
-import { useSettingsManageService } from '@/api/settings'
+import { useViewManageService } from '@/api/view'
 export default defineComponent({
   name: 'ViewForm',
   setup() {
     const store = useStore()
-    const settingsManageService = useSettingsManageService()
+    const viewManageService = useViewManageService()
     const formRef = ref()
     const formState = ref<SettingsManageType.ViewState>(new SettingsManageType.ViewState())
     const rules = {
@@ -27,7 +27,7 @@ export default defineComponent({
       view_name: [{ required: true, message: '请输入组件名称' }]
     }
     const getViewForm = async () => {
-      const result = await settingsManageService.detail(store.state.settings.id)
+      const result = await viewManageService.detail(store.state.settings.id)
       formState.value = result.data
     }
     onMounted(() => {

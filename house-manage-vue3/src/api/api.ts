@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2023-07-25 10:39:07
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-25 16:36:33
+ * @Last Modified time: 2023-07-25 17:18:06
  */
 
 import { request } from '@/utils/request'
@@ -11,19 +11,19 @@ import { LoadingDecorator } from '@/utils/loading'
 import { CommonManageType } from '@/interface/model/common'
 import { SettingsManageType } from '@/interface/model/settings'
 
-interface SettingsManageServiceInterface {
-  list(): Promise<CommonManageType.CommonAxiosResponse<SettingsManageType.ViewState>>
-  add(params: SettingsManageType.ViewState): Promise<CommonManageType.CommonAxiosResponse<any>>
-  edit(params: SettingsManageType.ViewState): Promise<CommonManageType.CommonAxiosResponse<any>>
+interface ApiManageServiceInterface {
+  list(): Promise<CommonManageType.CommonAxiosResponse<SettingsManageType.ApiState>>
+  add(params: SettingsManageType.ApiState): Promise<CommonManageType.CommonAxiosResponse<any>>
+  edit(params: SettingsManageType.ApiState): Promise<CommonManageType.CommonAxiosResponse<any>>
   detail(id: string): Promise<CommonManageType.CommonAxiosResponse<any>>
   delete(id: string): Promise<CommonManageType.CommonAxiosResponse<any>>
 }
 
-export const useSettingsManageService = (): SettingsManageServiceInterface => {
-  class SettingsManageService {
+export const useApiManageService = (): ApiManageServiceInterface => {
+  class ApiManageService {
     @LoadingDecorator(true)
     public async delete(id: string) {
-      const url = API_SETTINGS.list() + `/${id}`
+      const url = API_SETTINGS.apiList() + `/${id}`
       return request
         .delete(url)
         .then(({ data }) => {
@@ -35,7 +35,7 @@ export const useSettingsManageService = (): SettingsManageServiceInterface => {
     }
     @LoadingDecorator(true)
     public async detail(id: string) {
-      const url = API_SETTINGS.list() + `/${id}`
+      const url = API_SETTINGS.apiList() + `/${id}`
       return request
         .get(url)
         .then(({ data }) => {
@@ -47,7 +47,7 @@ export const useSettingsManageService = (): SettingsManageServiceInterface => {
     }
     @LoadingDecorator(true)
     public async list() {
-      const url = API_SETTINGS.list()
+      const url = API_SETTINGS.apiList()
       return request
         .get(url)
         .then(({ data }) => {
@@ -58,8 +58,8 @@ export const useSettingsManageService = (): SettingsManageServiceInterface => {
         })
     }
     @LoadingDecorator(true)
-    public async add(params: SettingsManageType.ViewState) {
-      const url = API_SETTINGS.list()
+    public async add(params: SettingsManageType.ApiState) {
+      const url = API_SETTINGS.apiList()
       return request
         .post(url, params)
         .then(({ data }) => {
@@ -70,8 +70,8 @@ export const useSettingsManageService = (): SettingsManageServiceInterface => {
         })
     }
     @LoadingDecorator(true)
-    public async edit(params: SettingsManageType.ViewState) {
-      const url = API_SETTINGS.list() + `/:${params.view_authority_id}`
+    public async edit(params: SettingsManageType.ApiState) {
+      const url = API_SETTINGS.apiList() + `/${params.api_authority_id}`
       return request
         .put(url, params)
         .then(({ data }) => {
@@ -82,5 +82,5 @@ export const useSettingsManageService = (): SettingsManageServiceInterface => {
         })
     }
   }
-  return new SettingsManageService()
+  return new ApiManageService()
 }

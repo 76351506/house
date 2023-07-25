@@ -26,7 +26,7 @@
 <script lang="ts" setup>
 import { ref, onMounted, computed } from 'vue'
 import { useStore } from 'vuex'
-import { useSettingsManageService } from '@/api/settings'
+import { useViewManageService } from '@/api/view'
 import { SettingsManageType } from '@/interface/model/settings'
 import { ValidateErrorEntity } from 'ant-design-vue/es/form/interface'
 import { message } from 'ant-design-vue'
@@ -51,7 +51,7 @@ const columns = [
   }
 ]
 const store = useStore()
-const settingsManageService = useSettingsManageService()
+const viewManageService = useViewManageService()
 const formRef = ref()
 const viewList = ref<Array<SettingsManageType.ViewState>>([])
 const visible = ref<boolean>(false)
@@ -68,7 +68,7 @@ const handleOk = () => {
   formRef.value.formRef
     .validate()
     .then(async () => {
-      const result = await settingsManageService.add(formRef.value.formState)
+      const result = store.state.settings.type == 'create' ? await viewManageService.add(formRef.value.formState) : await viewManageService.edit(formRef.value.formState)
       if (result.code) {
         message.success(result.message, 1, () => {
           visible.value = false
@@ -86,13 +86,13 @@ const handleOk = () => {
     })
 }
 const getViewList = async () => {
-  const result = await settingsManageService.list()
+  const result = await viewManageService.list()
   viewList.value = result.data
 }
 
 const confirm = async (id: string) => {
   //
-  const result = await settingsManageService.delete(id)
+  const result = await viewManageService.delete(id)
   if (result.code) {
     message.success(result.message, 1, () => {
       getViewList()

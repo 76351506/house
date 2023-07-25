@@ -2,10 +2,9 @@
  * @Author: heinan
  * @Date: 2023-07-25 15:59:15
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-25 16:17:42
+ * @Last Modified time: 2023-07-25 16:52:52
  */
 
-import { setStorage, getStorage } from '@/utils/common'
 import { StoreManageType } from '@/interface/store'
 
 interface ISettingsState {
