@@ -10,7 +10,8 @@ const {
 } = require("egg");
 
 class Housing extends Controller {
-  async housing() {
+
+  async housing() { //get
     const result = await this.ctx.service.housing.index(this.ctx.query);
     if (result.data.length) {
       this.ctx.body = {
@@ -28,7 +29,7 @@ class Housing extends Controller {
   }
 
   // 删除房源管理销售楼盘数据接口
-  async deleteMarkethouses() {
+  async deleteMarkethouses() { //delete
     const result = await this.ctx.service.housing.destroy(this.ctx.query);
     if (result.affectedRows) {
       this.ctx.body = {
@@ -44,8 +45,9 @@ class Housing extends Controller {
   }
 
   // 修改房源管理销售楼盘状态接口
-  async setMarketHouseStatus() {
-    awaitthis.ctx.service.housing.update(this.ctx.request.body);
+  async setMarketHouseStatus() { //post
+    const result = await this.ctx.service.housing.update(this.ctx.request.body);
+    // console.log(result);
     if (result.affectedRows) {
       this.ctx.body = {
         code: 1,
@@ -59,147 +61,150 @@ class Housing extends Controller {
     }
   }
 
-  // 获取房源管理页面销售经纪人数据接口
-  // async setMarketBroker() {
-  //   const {
-  //     ctx
-  //   } = this;
-  //   const data = await this.app.mysql.query(
-  //     `SELECT * FROM brokers WHERE state LIKE '%在职%' order by new_house asc`
-  //   );
-  //   ctx.body = {
-  //     code: 200,
-  //     data,
-  //   };
-  // }
-
   // 修改房源管理页面销售经纪人数据接口
-  async alterMarketBroker() {
-    const {
-      ctx
-    } = this;
-    const {
-      id,
-      broker
-    } = ctx.request.body;
-    await this.app.mysql.update("renthouses", {
-      id,
-      jjr: broker,
-    });
-    ctx.body = {
-      code: 200,
-      message: "修改成功",
-    };
+  async alterMarketBroker() { //post
+    const result = await this.ctx.service.housing.updateBroker(this.ctx.request.body);
+    if (result.affectedRows) {
+      this.ctx.body = {
+        code: 1,
+        message: "修改成功！",
+      };
+    } else {
+      this.ctx.body = {
+        code: 0,
+        message: "修改失败！",
+      };
+    }
   }
 
-  // 二手房
-  async secondHousing() {
-    const {
-      ctx
-    } = this;
-    let {
-      area = "", name = "", pageCount = 1, pageSize = 10
-    } = ctx.query;
-    area = area.replace(/(区|县)/, "");
-    const house = await this.app.mysql.query("SELECT * FROM secondhouses");
-    const data = await this.app.mysql.query(
-      `SELECT * FROM secondhouses WHERE quyu LIKE '%${area}%' AND name LIKE '%${name}%' limit ${
-        (pageCount - 1) * pageSize
-      },${pageSize}`
-    );
-    ctx.body = {
-      code: 200,
-      data: data.length ? data : false,
-      total: house.length,
-    };
+  async addHouses() { //post
+    const result = await this.ctx.service.housing.create(this.ctx.request.body);
+    if (result.affectedRows) {
+      this.ctx.body = {
+        code: 1,
+        message: "添加成功！",
+      };
+    } else {
+      this.ctx.body = {
+        code: 0,
+        message: "添加失败！",
+      };
+    }
+  }
+
+  async editHouses() { //post
+    const result = await this.ctx.service.housing.editHouse(this.ctx.request.body);
+    if (result.affectedRows) {
+      this.ctx.body = {
+        code: 1,
+        message: "修改成功！",
+      };
+    } else {
+      this.ctx.body = {
+        code: 0,
+        message: "修改失败！",
+      };
+    }
+  }
+
+  //--------- 二手房----------
+  async secondHousing() { //get
+    const result = await this.ctx.service.housing.secondIndex(this.ctx.query);
+    if (result.data.length) {
+      this.ctx.body = {
+        code: 1,
+        msg: "查询成功！",
+        ...result,
+      };
+    } else {
+      this.ctx.body = {
+        code: 0,
+        msg: "暂无数据！",
+        data: [],
+      };
+    }
   }
 
   // 删除二手房源管理销售楼盘数据接口
-  async deleteRenthouses() {
-    const {
-      ctx
-    } = this;
-    const {
-      id
-    } = ctx.query;
-    await this.app.mysql.delete("secondhouses", {
-      id,
-    });
-    ctx.body = {
-      code: 200,
-      message: "删除成功",
-    };
+  async deleteRenthouses() { //delete
+    const result = await this.ctx.service.housing.secondDestroy(this.ctx.query);
+    if (result.affectedRows) {
+      this.ctx.body = {
+        code: 1,
+        message: "删除成功！",
+      };
+    } else {
+      this.ctx.body = {
+        code: 0,
+        message: "删除失败！",
+      };
+    }
+
   }
 
-  // 修改房源管理房屋租赁状态接口
-  async setRentHouseStatus() {
-    const {
-      ctx
-    } = this;
-    const {
-      id,
-      status
-    } = ctx.request.body;
-    await this.app.mysql.update("secondhouses", {
-      id,
-      status,
-    });
-    ctx.body = {
-      code: 200,
-      message: "修改成功",
-    };
+  // 修改二手房源状态接口
+  async setRentHouseStatus() { //post
+    const result = await this.ctx.service.housing.secondUpdate(this.ctx.request.body);
+    if (result.affectedRows) {
+      this.ctx.body = {
+        code: 1,
+        message: "修改成功！",
+      };
+    } else {
+      this.ctx.body = {
+        code: 0,
+        message: "修改失败！",
+      };
+    }
   }
   // 修改房源管理房屋租赁经纪人数据接口
-  async alterRentBroker() {
-    const {
-      ctx
-    } = this;
-    const {
-      id,
-      broker
-    } = ctx.request.body;
-    await this.app.mysql.update("secondhouses", {
-      id,
-      jjr: broker,
-    });
-    ctx.body = {
-      code: 200,
-      message: "修改成功",
-    };
+  async alterRentBroker() { //post
+    const result = await this.ctx.service.housing.updatesecondBroker(this.ctx.request.body);
+    if (result.affectedRows) {
+      this.ctx.body = {
+        code: 1,
+        message: "修改成功！",
+      };
+    } else {
+      this.ctx.body = {
+        code: 0,
+        message: "修改失败！",
+      }
+    }
   }
 
+  async addSecondHouses() { //post
+    const result = await this.ctx.service.housing.secondCreate(this.ctx.request.body);
+    if (result.affectedRows) {
+      this.ctx.body = {
+        code: 1,
+        message: "修改成功！",
+      };
+    } else {
+      this.ctx.body = {
+        code: 0,
+        message: "修改失败！",
+      };
+    }
+  }
+  async editSecondHouses() { //post
+    const result = await this.ctx.service.housing.editSecondHouses(this.ctx.request.body);
+    if (result.affectedRows) {
+      this.ctx.body = {
+        code: 1,
+        message: "修改成功！",
+      };
+    } else {
+      this.ctx.body = {
+        code: 0,
+        message: "修改失败！",
+      };
+    }
+  }
   // ----------------------------客户端-------------------------------- //
   //获取租房数据
-  async getRenting() {
-    const {
-      ctx
-    } = this;
-    let {
-      zf = "",
-        quyu = "",
-        jiage,
-        page = 1,
-        pageNum = 50,
-        xq = "",
-    } = ctx.query;
-    // 转换数据格式(get请求会将对象转为字符串)
-    zf = zf === "不限" ? "" : zf;
-    quyu = quyu === "不限" ? "" : quyu;
-    jiage = jiage ? JSON.parse(jiage) : {};
-    // 定义sql语句
-    var sql = "";
-    if ((jiage.min || jiage.min === 0) && jiage.max) {
-      // 区间
-      sql = `AND jiage>=${jiage.min} AND jiage<=${jiage.max}`;
-    } else if (jiage.min && !jiage.max) {
-      // 大于
-      sql = `AND jiage>=${jiage.min}`;
-    }
-    const result = await this.app.mysql.query(
-      `SELECT * FROM renthouses WHERE zf LIKE '%${zf}%' AND xq LIKE '%${xq}%' AND quyu LIKE '%${quyu}%' ${sql} ORDER BY id DESC LIMIT 0, ${
-        page * pageNum
-      }`
-    );
+  async getRenting() { //post
+    const result = await this.ctx.service.housing.getRent(this.ctx.query)
     const data = await this.app.mysql.select("renthouses");
     // 筛选所有区域去重
     const area = [...new Set(data.map((item) => item.quyu))];

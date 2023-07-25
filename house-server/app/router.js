@@ -6,9 +6,11 @@
  */
 
 module.exports = (app) => {
-  const { router, controller } = app;
+  const {
+    router,
+    controller
+  } = app;
   router.get("/", controller.home.index);
-
   // 审核列表
   // router.get("/audit", controller.audit.audit);
   // router.delete("/audit", controller.audit.delAudit);
@@ -56,24 +58,35 @@ module.exports = (app) => {
   // 订单管理删除接口
   router.delete("/del/order", controller.order.delOrder);
 
+  //----------------房源--------------- //
+
   // 获取房源列表
   router.get("/housing", controller.housing.housing);
+  // 添加房源
+  router.post("/addHouse", controller.housing.addHouses);
+  // 编辑
+  router.post("/editHouse", controller.housing.addHouses);
   // 销售楼盘删除接口
   router.delete("/deleteMarkethouses", controller.housing.deleteMarkethouses);
   // 修改销售楼盘状态接口
   router.post("/setMarketHouseStatus", controller.housing.setMarketHouseStatus);
-  // 获取房源管理页面销售经纪人数据接口
-  router.get("/setMarketBroker", controller.housing.setMarketBroker);
   // 修改房源管理页面销售经纪人数据接口
   router.post("/alterMarketBroker", controller.housing.alterMarketBroker);
   // 获取二手房源列表
   router.get("/second/housing", controller.housing.secondHousing);
-  // 房屋租赁删除接口
+  // 添加二手房
+  router.post("/addSecondHouse", controller.housing.addSecondHouses);
+  // 修改二手房
+  router.post("/editSecondHouse", controller.housing.editSecondHouses);
+  // 房屋二手房删除接口
   router.delete("/deleteRenthouses", controller.housing.deleteRenthouses);
-  // 修改房屋租赁状态接口
+  // 修改二手房状态接口
   router.post("/setRentHouseStatus", controller.housing.setRentHouseStatus);
-  // 修改房源管理房屋租赁经纪人数据接口
+  // 修改二手房经纪人数据接口
   router.post("/alterRentBroker", controller.housing.alterRentBroker);
+
+
+  //----------------团购--------------- //
   // 获取团购列表
   router.get("/group", controller.group.group);
   // 删除团购列表
