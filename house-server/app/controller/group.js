@@ -30,7 +30,6 @@ class GroupController extends Controller {
     const result = await this.ctx.service.group.create(
       this.ctx.request.body
     );
-    console.log(result);
     if (result.affectedRows) {
       this.ctx.body = {
         code: 1,
@@ -63,7 +62,6 @@ class GroupController extends Controller {
   }
   // 删除接口Postman测试OK
   async destroy() {
-    console.log(this.ctx);
     const result = await this.ctx.service.group.destroy(this.ctx.params);
     if (result.affectedRows) {
       this.ctx.body = {
