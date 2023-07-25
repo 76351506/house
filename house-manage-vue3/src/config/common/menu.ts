@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2023-06-27 15:38:54
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-19 22:23:41
+ * @Last Modified time: 2023-07-25 10:34:53
  */
 import { AppManageType } from '@/interface/model/app'
 
@@ -91,6 +91,31 @@ const menuConfig: Array<AppManageType.MenuItemForSider> = [
       //   name: 'RoomManage',
       //   title: 'VR看房'
       // }
+    ]
+  },
+  {
+    key: 'sub8',
+    icon: 'DeploymentUnitOutlined',
+    title: '系统设置',
+    children: [
+      {
+        icon: 'PieChartOutlined',
+        key: 'authorition',
+        name: 'Authorition',
+        title: '权限设置'
+      },
+      {
+        icon: 'PieChartOutlined',
+        key: 'viewManage',
+        name: 'ViewManage',
+        title: '视图管理'
+      },
+      {
+        icon: 'PieChartOutlined',
+        key: 'apiManage',
+        name: 'ApiManage',
+        title: '接口管理'
+      }
     ]
   }
 ]

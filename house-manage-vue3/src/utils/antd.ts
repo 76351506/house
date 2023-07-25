@@ -2,10 +2,11 @@
  * @Author: heinan
  * @Date: 2023-07-04 16:48:59
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-21 10:12:07
+ * @Last Modified time: 2023-07-25 16:34:50
  */
 import 'ant-design-vue/dist/antd.less'
 import {
+  Popconfirm,
   Slider,
   ConfigProvider,
   Layout,
@@ -48,7 +49,9 @@ import {
   Empty,
   Space
 } from 'ant-design-vue'
+
 export default (Vue: any) => {
+  Vue.use(Popconfirm)
   Vue.use(Slider)
   Vue.use(ConfigProvider)
   Vue.use(Layout)

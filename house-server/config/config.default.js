@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2023-07-21 10:40:26
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-24 16:28:52
+ * @Last Modified time: 2023-07-25 15:51:08
  */
 "use strict";
 const {
@@ -22,6 +22,8 @@ module.exports = (appInfo) => {
   config.mysql = {
     client: {
       host: "10.37.26.179",
+      // host: "localhost",
+      // host: "10.37.7.101",git 
       port: "3306",
       user: "root",
       password: "123456",

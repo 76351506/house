@@ -14,7 +14,7 @@
     </a-layout-sider>
     <a-layout>
       <LayoutHeader @onQuit="onSignOut"></LayoutHeader>
-      <a-layout-content :style="{ padding: '16px', margin: '0 16px' }">
+      <a-layout-content :style="{ padding: '16px', margin: '0 16px', 'overflow-y': 'scroll' }">
         <!-- <Breadcrumb></Breadcrumb>
         <a-divider /> -->
         <div :style="{ minHeight: '360px' }">
