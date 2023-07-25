@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2023-07-20 19:06:56
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-25 19:47:30
+ * @Last Modified time: 2023-07-25 20:00:00
  */
 
 module.exports = (app) => {
@@ -19,8 +19,7 @@ module.exports = (app) => {
   router.resources("broker", "/api/v1/broker", controller.broker);
   // 资讯列表
   router.resources("infos", "/api/v1/infos", controller.infos);
-  router.resources("order", "/api/v1/order", controller.infos);
-
+  router.resources("order", "/api/v1/order", controller.order);
 
   // 根据用户id获取用户身份
   router.get("/getIdentityById/:id", controller.identity.getIdentityById);
@@ -46,8 +45,6 @@ module.exports = (app) => {
 
   // 获取左侧菜单栏数据
   router.get("/sider", controller.home.sider);
-
-
 
   // 获取房源列表
   router.get("/housing", controller.housing.housing);
