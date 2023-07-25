@@ -11,7 +11,7 @@ class GroupController extends Controller {
   // 查询接口Postman测试OK
   async index() {
     const result = await this.ctx.service.group.index(this.ctx.query);
-    if (result) {
+    if (result.data.length) {
       this.ctx.body = {
         code: 1,
         message: "查询成功!",

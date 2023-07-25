@@ -11,7 +11,7 @@ module.exports = (appInfo) => {
   const config = (exports = {});
   config.keys = appInfo.name + "_1636591141914_4788";
   // config.middleware = ["responseTime", "checkLogin", "checkIdentity", "gzip"];
-  config.middleware = ["responseTime", "checkLogin", "gzip"];
+  // config.middleware = ["responseTime", "checkLogin", "gzip"];
   config.security = {
     csrf: {
       enable: false,
@@ -19,8 +19,8 @@ module.exports = (appInfo) => {
   };
   config.mysql = {
     client: {
-      host: "localhost",
-      // host: "10.37.7.101",
+      // host: "localhost",
+      host: "10.37.7.101",
       port: "3306",
       user: "root",
       password: "123456",

@@ -67,8 +67,8 @@ class GorupService extends Service {
         const $options = { where: { group_id: id } };
         return await this.app.mysql.update("groups", $data, $options);
     }
-    async create({ img, group_title, house_name, province, city, county, address, created_time, finished_time }) {
-        const $data = { img, group_title, house_name, province, city, county, address, created_time, finished_time, group_id: idCreator() };
+    async create({ img, group_title, house_name, province, city, county, address, start_time, end_time, group_info }) {
+        const $data = { img, group_title, house_name, province, city, county, address, start_time, end_time, group_info, group_id: idCreator() };
         console.log($data);
         return await this.app.mysql.insert("groups", $data);
     }
