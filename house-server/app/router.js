@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2023-07-20 19:06:56
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-25 20:10:05
+ * @Last Modified time: 2023-07-25 20:12:43
  */
 
 module.exports = (app) => {
@@ -37,8 +37,23 @@ module.exports = (app) => {
   // 用户接口
   router.post("/user/login", controller.user.login);
   router.post("/user/registry", controller.user.registry);
-  router.get("/userInfo", controller.userInfo.userInfo);
-  router.delete("/delUser", controller.userInfo.delUser);
+
+  /**
+   * 获取用户列表
+   */
+  router.get("/getUserList", controller.user.getUserList);
+  /**
+   * 增加用户
+   */
+  router.post("/addUserInfo", controller.user.addUserInfo);
+  /**
+   * 编辑用户信息
+   */
+  router.post("/updateUserInfo", controller.user.updateUserInfo);
+  /**
+   * 删除用户
+   */
+  router.delete("/delUser", controller.user.delUser);
 
   // 获取左侧菜单栏数据
   router.get("/sider", controller.home.sider);
