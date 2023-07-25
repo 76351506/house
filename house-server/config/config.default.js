@@ -19,8 +19,8 @@ module.exports = (appInfo) => {
   };
   config.mysql = {
     client: {
-      host: "localhost",
-      // host: "10.37.7.101",
+      // host: "localhost",
+      host: "10.37.7.101",
       port: "3306",
       user: "root",
       password: "123456",

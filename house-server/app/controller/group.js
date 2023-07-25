@@ -1,61 +1,78 @@
 /*
- * @Author: heinan 
- * @Date: 2023-07-23 22:59:56 
+ * @Author: heinan
+ * @Date: 2023-07-23 22:50:43
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-23 23:00:20
+ * @Last Modified time: 2023-07-25 20:09:05
  */
 "use strict";
 const { Controller } = require("egg");
 
-class Group extends Controller {
-  async group() {
-    const { ctx } = this;
-    const {
-      province = "",
-      city = "",
-      area = "",
-      initiator = "",
-      group_status = "",
-      address = "",
-      status = "",
-    } = ctx.query;
-    const data = await this.app.mysql.query(
-      `SELECT * FROM groupBuy WHERE province LIKE '%${province}%' AND city LIKE '%${city}%' AND district LIKE '%${area}%' AND initiator LIKE '%${initiator}%' AND group_status LIKE '%${group_status}%' AND address LIKE '%${address}%' AND status LIKE '%${status}%' ORDER BY id DESC`
-    );
-    ctx.body = {
-      code: 200,
-      data: data.length ? data : false,
-    };
-  }
-  async delGroup() {
-    const { ctx } = this;
-    const { id } = ctx.query;
-    await this.app.mysql.delete("groups", {
-      id,
-    });
-    ctx.body = {
-      code: 200,
-      message: "删除成功",
-    };
-  }
-  async setGroup() {
-    const { ctx } = this;
-    let { id, status } = ctx.request.body;
-    let sta = 0;
-    if (status == 1) {
-      sta = 0;
+class GroupController extends Controller {
+  // 查询接口Postman测试OK
+  async index() {
+    const result = await this.ctx.service.group.index(this.ctx.query);
+    if (result.data.length) {
+      this.ctx.body = {
+        code: 1,
+        message: "查询成功!",
+        data: result,
+      };
     } else {
-      sta = 1;
+      this.ctx.body = {
+        code: 0,
+        message: "暂无数据!",
+        data: [],
+      };
     }
-    await this.app.mysql.update("groupBuy", {
-      id,
-      status: sta,
+  }
+  // 新增接口Postman测试OK
+  async create() {
+    const result = await this.ctx.service.group.create(this.ctx.request.body);
+    if (result.affectedRows) {
+      this.ctx.body = {
+        code: 1,
+        message: "新增成功!",
+      };
+    } else {
+      this.ctx.body = {
+        code: 0,
+        message: "新增失败!",
+      };
+    }
+  }
+  // 更改状态接口Postman测试OK
+  async update() {
+    const result = await this.ctx.service.group.update({
+      ...this.ctx.params,
+      ...this.ctx.request.body,
     });
-    ctx.body = {
-      code: 200,
-      message: "修改成功",
-    };
+    if (result.affectedRows) {
+      this.ctx.body = {
+        code: 1,
+        message: "修改成功!",
+      };
+    } else {
+      this.ctx.body = {
+        code: 0,
+        message: "修改失败!",
+      };
+    }
+  }
+  // 删除接口Postman测试OK
+  async destroy() {
+    const result = await this.ctx.service.group.destroy(this.ctx.params);
+    if (result.affectedRows) {
+      this.ctx.body = {
+        code: 1,
+        message: "删除成功!",
+      };
+    } else {
+      this.ctx.body = {
+        code: 0,
+        message: "删除失败!",
+      };
+    }
   }
 }
 
-module.exports = Group;
+module.exports = GroupController;

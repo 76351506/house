@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2023-07-20 19:06:56
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-25 20:00:00
+ * @Last Modified time: 2023-07-25 20:10:05
  */
 
 module.exports = (app) => {
@@ -20,7 +20,7 @@ module.exports = (app) => {
   // 资讯列表
   router.resources("infos", "/api/v1/infos", controller.infos);
   router.resources("order", "/api/v1/order", controller.order);
-
+  router.resources("group", "/api/v1/group", controller.group);
   // 根据用户id获取用户身份
   router.get("/getIdentityById/:id", controller.identity.getIdentityById);
   // 根据用户id对应的身份权限identity_id获取对应的视图权限
@@ -37,10 +37,7 @@ module.exports = (app) => {
   // 用户接口
   router.post("/user/login", controller.user.login);
   router.post("/user/registry", controller.user.registry);
-
-  // 获取用户列表
   router.get("/userInfo", controller.userInfo.userInfo);
-  // 删除用户
   router.delete("/delUser", controller.userInfo.delUser);
 
   // 获取左侧菜单栏数据
@@ -64,12 +61,6 @@ module.exports = (app) => {
   router.post("/setRentHouseStatus", controller.housing.setRentHouseStatus);
   // 修改房源管理房屋租赁经纪人数据接口
   router.post("/alterRentBroker", controller.housing.alterRentBroker);
-  // 获取团购列表
-  router.get("/group", controller.group.group);
-  // 删除团购列表
-  router.delete("/del/group", controller.group.delGroup);
-  // 设置团购列表
-  router.post("/set/group", controller.group.setGroup);
   // 获取直播列表
   router.get("/live", controller.live.live);
   // 删除直播
