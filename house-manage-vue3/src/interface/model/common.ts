@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2023-07-17 15:24:42
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-24 17:32:16
+ * @Last Modified time: 2023-07-25 10:40:08
  */
 
 export namespace CommonManageType {
@@ -33,7 +33,7 @@ export namespace CommonManageType {
     code: number
     data: Array<T>
     msg?: string
-    total: number
-    currentPage: number
+    total?: number
+    currentPage?: number
   }
 }
