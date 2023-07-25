@@ -64,11 +64,6 @@ class UserService extends Service {
     return await this.ctx.app.mysql.query($sql, $params);
   }
 
-  async getUserInfo({ uid }) {
-    const $sql = "SELECT * FROM user WHERE uid=?";
-    const $params = [uid];
-    return await this.ctx.app.mysql.query($sql, $params);
-  }
   async upload(filepath, filenam) {
     const uploadData = fs.readFileSync(filepath);
     const uploadDir = path.join(process.cwd(), "app/public/upload", filenam);
@@ -98,6 +93,77 @@ class UserService extends Service {
     And identity.identity_id=identity_api_authority_relation.identity_id`;
     const result = await this.app.mysql.query(sql);
     return result.length > 0;
+  }
+  /**
+   * 获取用户列表
+   * @param nickname String 昵称
+   * @param username String 用户名
+   * @param tel String 手机号
+   * @param currentPage Number 当前页码
+   * @param pageSize Number 分页展示个数
+   * @returns
+   */
+  async getUserList({ nickname, username, tel, currentPage, pageSize }) {
+    const where = {};
+
+    if (nickname) {
+      where.nickname = nickname;
+    }
+    if (username) {
+      where.username = username;
+    }
+    if (tel) {
+      where.tel = tel;
+    }
+    const result = await this.app.mysql.select("users", {
+      where,
+      offset: (currentPage - 1) * pageSize,
+      limit: parseInt(pageSize),
+    });
+    const total = await this.app.mysql.count("users", where);
+    return {
+      data: result,
+      total,
+      pageSize: Number(pageSize),
+      currentPage: Number(currentPage),
+    };
+  }
+  /**
+   * 删除用户信息
+   * @param id String 用户id
+   * @returns
+   */
+  async delUser({ id }) {
+    return await this.app.mysql.delete("users", { id });
+  }
+  /**
+   * 编辑用户信息
+   * @param id String 用户id
+   * @param nickname String 昵称
+   * @param username String 用户名
+   * @param tel String 手机号
+   * @param email string 邮箱
+   * @param avatar string 用户头像
+   * @returns
+   */
+  async updateUserInfo({ id, nickname, username, tel, email, avatar }) {
+    const $data = { nickname, username, tel, email, avatar };
+    const $options = { where: { id } };
+    return await this.app.mysql.update("users", $data, $options);
+  }
+  /**
+   * 添加用户信息
+   * @param id String 用户id
+   * @param nickname String 昵称
+   * @param username String 用户名
+   * @param tel String 手机号
+   * @param email string 邮箱
+   * @param avatar string 用户头像
+   * @returns
+   */
+  async addUserInfo({ id, nickname, username, tel, email, avatar }) {
+    const $data = { id, nickname, username, tel, email, avatar };
+    return await this.app.mysql.insert("users", $data);
   }
 }
 

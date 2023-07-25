@@ -8,7 +8,7 @@
 const { Controller } = require("egg");
 const { passwordCreator, tokenCreator } = require("../utils");
 
-class User extends Controller {
+class UserController extends Controller {
   async login() {
     try {
       this.ctx.validate({
@@ -81,6 +81,105 @@ class User extends Controller {
       };
     }
   }
+  /**
+   * 获取用户列表
+   * @param nickname String 昵称
+   * @param username String 用户名
+   * @param tel String 手机号
+   * @param currentPage Number 当前页码
+   * @param pageSize Number 分页展示个数
+   * @returns
+   */
+  async getUserList() {
+    const result = await this.ctx.service.user.getUserList(this.ctx.query);
+    if (result.data.length) {
+      this.ctx.body = {
+        code: 1,
+        msg: "查询成功！",
+        ...result,
+      };
+    } else {
+      this.ctx.body = {
+        code: 0,
+        msg: "暂无数据！",
+        data: [],
+      };
+    }
+  }
+  /**
+   * 删除用户
+   * @param id String 用户id
+   * @returns
+   */
+  async delUser() {
+    const result = await this.ctx.service.user.delUser(this.ctx.query);
+    if (result.affectedRows) {
+      this.ctx.body = {
+        code: 1,
+        message: "删除成功！",
+      };
+    } else {
+      this.ctx.body = {
+        code: 0,
+        message: "删除失败！",
+      };
+    }
+  }
+  /**
+   * 编辑用户信息
+   * @param id String 用户id
+   * @param nickname String 昵称
+   * @param username String 用户名
+   * @param tel String 手机号
+   * @param email string 邮箱
+   * @param avatar string 用户头像
+   * @returns
+   */
+  async updateUserInfo() {
+    const result = await this.ctx.service.user.updateUserInfo({
+      ...this.ctx.params,
+      ...this.ctx.request.body,
+    });
+    if (result.affectedRows) {
+      this.ctx.body = {
+        code: 1,
+        message: "修改成功！",
+        ...result,
+      };
+    } else {
+      this.ctx.body = {
+        code: 0,
+        message: "修改失败！",
+      };
+    }
+  }
+  /**
+   * 添加用户信息
+   * @param id String 用户id
+   * @param nickname String 昵称
+   * @param username String 用户名
+   * @param tel String 手机号
+   * @param email string 邮箱
+   * @param avatar string 用户头像
+   * @returns
+   */
+  async addUserInfo() {
+    const result = await this.ctx.service.user.addUserInfo({
+      ...this.ctx.params,
+      ...this.ctx.request.body,
+    });
+    if (result.affectedRows) {
+      this.ctx.body = {
+        code: 1,
+        message: "新增成功成功！",
+      };
+    } else {
+      this.ctx.body = {
+        code: 0,
+        message: "新增成功失败！",
+      };
+    }
+  }
 }
 
-module.exports = User;
+module.exports = UserController;
