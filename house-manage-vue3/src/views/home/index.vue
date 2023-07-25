@@ -110,7 +110,7 @@ const onSubmit = () => {
   formRef.value
     .validate()
     .then(() => {
-      console.log(formState.value)
+      getAuditList()
     })
     .catch((error: ValidateErrorEntity<AuditManageType.FormState>) => {
       console.log('error', error)
@@ -118,6 +118,7 @@ const onSubmit = () => {
 }
 const onReset = () => {
   formState.value = new AuditManageType.FormState()
+  getAuditList()
 }
 
 const onChange = (current: number, pageSize: number) => {
