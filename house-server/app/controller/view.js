@@ -2,14 +2,30 @@
  * @Author: heinan
  * @Date: 2023-07-23 22:50:43
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-24 09:42:44
+ * @Last Modified time: 2023-07-25 16:28:04
  */
 "use strict";
 const { Controller } = require("egg");
 
 class ViewController extends Controller {
+  async show() {
+    const result = await this.ctx.service.view.show(this.ctx.params);
+    if (result) {
+      this.ctx.body = {
+        code: 1,
+        message: "查询成功!",
+        data: result,
+      };
+    } else {
+      this.ctx.body = {
+        code: 0,
+        message: "暂无数据!",
+        data: result,
+      };
+    }
+  }
   async index() {
-    const result = this.ctx.service.view.index();
+    const result = await this.ctx.service.view.index();
     if (result.length) {
       this.ctx.body = {
         code: 1,
