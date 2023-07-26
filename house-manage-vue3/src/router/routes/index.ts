@@ -75,18 +75,28 @@ export const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "ChatRoom" */ '@/views/chat/index.vue')
   },
   {
-    path: '/settings/authority',
-    name: 'Authorition',
-    component: () => import(/* webpackChunkName: "Settings" */ '@/views/settings/authority/index.vue')
+    path: '/authority/viewAuthority',
+    name: 'ViewAuthority',
+    component: () => import(/* webpackChunkName: "Authority" */ '@/views/authority/authority/view.vue')
   },
   {
-    path: '/settings/authority/view',
+    path: '/authority/apiAuthority',
+    name: 'ApiAuthority',
+    component: () => import(/* webpackChunkName: "Authority" */ '@/views/authority/authority/api.vue')
+  },
+  {
+    path: '/authority/identity',
+    name: 'Identity',
+    component: () => import(/* webpackChunkName: "Authority" */ '@/views/authority/identity/index.vue')
+  },
+  {
+    path: '/authority/view',
     name: 'ViewManage',
-    component: () => import(/* webpackChunkName: "Settings" */ '@/views/settings/authority/view/index.vue')
+    component: () => import(/* webpackChunkName: "Authority" */ '@/views/authority/view/index.vue')
   },
   {
-    path: '/settings/authority/api',
+    path: '/authority/api',
     name: 'ApiManage',
-    component: () => import(/* webpackChunkName: "Settings" */ '@/views/settings/authority/api/index.vue')
+    component: () => import(/* webpackChunkName: "Authority" */ '@/views/authority/api/index.vue')
   }
 ]

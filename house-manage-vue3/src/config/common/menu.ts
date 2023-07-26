@@ -100,9 +100,9 @@ const menuConfig: Array<AppManageType.MenuItemForSider> = [
     children: [
       {
         icon: 'PieChartOutlined',
-        key: 'authorition',
-        name: 'Authorition',
-        title: '权限设置'
+        key: 'identity',
+        name: 'Identity',
+        title: '身份列表'
       },
       {
         icon: 'PieChartOutlined',
@@ -115,6 +115,18 @@ const menuConfig: Array<AppManageType.MenuItemForSider> = [
         key: 'apiManage',
         name: 'ApiManage',
         title: '接口管理'
+      },
+      {
+        icon: 'PieChartOutlined',
+        key: 'viewAuthority',
+        name: 'ViewAuthority',
+        title: '设置视图权限'
+      },
+      {
+        icon: 'PieChartOutlined',
+        key: 'apiAuthority',
+        name: 'ApiAuthority',
+        title: '设置接口权限'
       }
     ]
   }

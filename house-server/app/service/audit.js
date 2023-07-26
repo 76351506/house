@@ -2,12 +2,10 @@
  * @Author: heinan
  * @Date: 2020-07-16 11:33:19
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-25 19:17:19
+ * @Last Modified time: 2023-07-26 16:19:10
  */
 "use strict";
-const {
-  Service
-} = require("egg");
+const { Service } = require("egg");
 
 class AuditService extends Service {
   /**
@@ -21,15 +19,7 @@ class AuditService extends Service {
    * @returns
    */
 
-  async index({
-    province,
-    city,
-    county,
-    title,
-    state,
-    currentPage,
-    pageSize
-  }) {
+  async index({ province, city, county, title, state, currentPage, pageSize }) {
     const where = {};
     if (province) {
       where.province = province;
@@ -43,9 +33,11 @@ class AuditService extends Service {
     if (title) {
       where.title = title;
     }
-    if (state == "全部") {} else if (state) {
+    if (state == "全部") {
+    } else if (state) {
       where.state = state;
-    } else {}
+    } else {
+    }
     const result = await this.app.mysql.select("controls", {
       where,
       offset: (currentPage - 1) * pageSize,
@@ -59,24 +51,19 @@ class AuditService extends Service {
       data: result,
     };
   }
-  async destroy({
-    id
-  }) {
+  async destroy({ id }) {
     return await this.app.mysql.delete("controls", {
-      id
+      id,
     });
   }
-  async update({
-    id,
-    state
-  }) {
+  async update({ id, state }) {
     const $data = {
-      state
+      state,
     };
     const $options = {
       where: {
-        id
-      }
+        id,
+      },
     };
     return await this.app.mysql.update("controls", $data, $options);
   }
