@@ -104,7 +104,7 @@ module.exports = (app) => {
   // 获取房源
   router.get("/renting", controller.housing.getRenting);
   // 获取房源详情
-  router.get("/detail", controller.housing.getDetail);
+  // router.get("/detail", controller.housing.getDetail);
   // 获取地图所有有房的列表
   router.get("/mapList", controller.map.getMaps);
 };

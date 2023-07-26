@@ -207,7 +207,7 @@ class Housing extends Controller {
     const result = await this.ctx.service.housing.getRent(this.ctx.query)
     const data = await this.app.mysql.select("renthouses");
     // 筛选所有区域去重
-    const area = [...new Set(data.map((item) => item.quyu))];
+    const area = [...new Set(data.map((item) => item.area))];
     // 生成id
     function createRandomId() {
       return (
@@ -287,21 +287,21 @@ class Housing extends Controller {
       typeArr,
     };
   }
-  async getDetail() {
-    const {
-      ctx
-    } = this;
-    let {
-      id
-    } = ctx.query;
-    const post = await this.app.mysql.get("renthouses", {
-      id,
-    });
-    ctx.body = {
-      code: 200,
-      data: post,
-    };
-  }
+  // async getDetail() {
+  //   const {
+  //     ctx
+  //   } = this;
+  //   let {
+  //     id
+  //   } = ctx.query;
+  //   const post = await this.app.mysql.get("renthouses", {
+  //     id,
+  //   });
+  //   ctx.body = {
+  //     code: 200,
+  //     data: post,
+  //   };
+  // }
 }
 
 module.exports = Housing;

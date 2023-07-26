@@ -19,6 +19,7 @@ class HouseService extends Service {
     city,
     county,
     name,
+    id,
     currentPage,
     pageSize
   }) {
@@ -38,6 +39,9 @@ class HouseService extends Service {
     }
     if (county) {
       where.county = county;
+    }
+    if (id) {
+      where.id = id;
     }
     if (state == "全部") {
       state = ''
@@ -223,6 +227,7 @@ class HouseService extends Service {
     city,
     county,
     name,
+    id,
     currentPage,
     pageSize
   }) {
@@ -233,6 +238,9 @@ class HouseService extends Service {
     }
     if (name) {
       where.name = name;
+    }
+    if (id) {
+      where.id = id;
     }
     if (province) {
       where.province = province;
@@ -452,6 +460,8 @@ class HouseService extends Service {
       currentPage: Number(currentPage),
     };
   }
+
+  //获取详情
 
 
 
