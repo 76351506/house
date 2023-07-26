@@ -9,7 +9,7 @@ const { Service } = require("egg");
 const { idCreator } = require("../utils");
 
 class BrokerService extends Service {
-  async index({ mobile, company, state, currentPage, pageSize }) {
+  async index({ mobile, company, status, currentPage, pageSize }) {
     const where = {};
     if (mobile) {
       where.mobile = mobile;
@@ -17,9 +17,9 @@ class BrokerService extends Service {
     if (company) {
       where.company = company;
     }
-    if (state == "全部") {
-    } else if (state) {
-      where.state = state;
+    if (status == "全部") {
+    } else if (status) {
+      where.status = status;
     } else {
     }
     return await this.app.mysql.select("brokers", {
@@ -31,8 +31,8 @@ class BrokerService extends Service {
   async destroy({ id }) {
     return await this.app.mysql.delete("brokers", { id });
   }
-  async update({ id, state }) {
-    const $data = { id, state };
+  async update({ id, status }) {
+    const $data = { id, status };
     return await this.app.mysql.update("controls", $data);
   }
   async create(params) {
