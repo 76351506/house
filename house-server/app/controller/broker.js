@@ -8,6 +8,7 @@
 const { Controller } = require("egg");
 
 class Broker extends Controller {
+  //获取经纪人信息
   async index() {
     try {
       this.ctx.validate(
@@ -39,7 +40,7 @@ class Broker extends Controller {
       };
     }
   }
-
+  //删除经纪人信息
   async destory() {
     const result = await this.ctx.service.broker.destroy(this.ctx.params);
     if (result.affectedRows) {
@@ -54,6 +55,7 @@ class Broker extends Controller {
       };
     }
   }
+  //修改经纪人离职在职状态
   async update() {
     const result = await this.ctx.service.broker.update({
       ...this.ctx.params,
@@ -71,6 +73,7 @@ class Broker extends Controller {
       };
     }
   }
+  //添加经纪人
   async create() {
     try {
       this.ctx.validate({
