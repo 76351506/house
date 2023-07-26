@@ -5,7 +5,9 @@
  * @Last Modified time: 2023-07-25 20:15:35
  */
 "use strict";
-const { routeCreator } = require("../app/utils");
+const {
+  routeCreator
+} = require("../app/utils");
 
 module.exports = (appInfo) => {
   const config = (exports = {});
@@ -19,6 +21,8 @@ module.exports = (appInfo) => {
   };
   config.mysql = {
     client: {
+      // host: "10.37.26.179",
+      // host: "localhost",
       host: "10.37.7.101",
       port: "3306",
       user: "root",
