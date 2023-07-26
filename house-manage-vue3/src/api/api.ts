@@ -15,7 +15,7 @@ interface ApiManageServiceInterface {
   list(): Promise<CommonManageType.CommonAxiosResponse<SettingsManageType.ApiState>>
   add(params: SettingsManageType.ApiState): Promise<CommonManageType.CommonAxiosResponse<any>>
   edit(params: SettingsManageType.ApiState): Promise<CommonManageType.CommonAxiosResponse<any>>
-  detail(id: string): Promise<CommonManageType.CommonAxiosResponse<any>>
+  detail(id: string): Promise<any>
   delete(id: string): Promise<CommonManageType.CommonAxiosResponse<any>>
 }
 

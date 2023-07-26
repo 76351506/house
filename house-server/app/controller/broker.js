@@ -19,7 +19,7 @@ class Broker extends Controller {
         this.ctx.query
       );
     } catch (err) {
-      this.ctx.status = 406;
+      this.ctx.status = 400;
       return (this.ctx.body = {
         code: 0,
         error: err.errors,
@@ -82,7 +82,7 @@ class Broker extends Controller {
         company: "string",
       });
     } catch (err) {
-      this.ctx.status = 406;
+      this.ctx.status = 400;
       return (this.ctx.body = {
         code: 0,
         error: err.errors,

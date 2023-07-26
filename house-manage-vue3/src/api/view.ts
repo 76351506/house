@@ -15,7 +15,7 @@ interface useViewManageServiceInterface {
   list(): Promise<CommonManageType.CommonAxiosResponse<SettingsManageType.ViewState>>
   add(params: SettingsManageType.ViewState): Promise<CommonManageType.CommonAxiosResponse<any>>
   edit(params: SettingsManageType.ViewState): Promise<CommonManageType.CommonAxiosResponse<any>>
-  detail(id: string): Promise<CommonManageType.CommonAxiosResponse<any>>
+  detail(id: string): Promise<any>
   delete(id: string): Promise<CommonManageType.CommonAxiosResponse<any>>
 }
 

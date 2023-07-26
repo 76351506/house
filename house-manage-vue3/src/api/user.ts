@@ -17,6 +17,7 @@ interface UseUserServiceInterface {
   getUserIdByToken(token: string): Promise<any>
   getUserInfoById(params: { uid: string }): Promise<any>
   updateUser(data: UserManageType.UserInfoState): Promise<any>
+  getCaptcha(): Promise<any>
 }
 
 export const useUserService = (): UseUserServiceInterface => {
@@ -109,6 +110,17 @@ export const useUserService = (): UseUserServiceInterface => {
       const url = API_USER.getUserInfoById()
       return request
         .get(url, { params })
+        .then(({ data }) => {
+          return Promise.resolve(data)
+        })
+        .catch(err => {
+          return Promise.reject(err)
+        })
+    }
+    public async getCaptcha() {
+      const url = API_USER.getCaptcha()
+      return request
+        .get(url)
         .then(({ data }) => {
           return Promise.resolve(data)
         })

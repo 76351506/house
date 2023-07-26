@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2023-07-24 00:24:57
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-24 16:28:38
+ * @Last Modified time: 2023-07-26 10:29:55
  */
 "use strict";
 
@@ -133,7 +133,7 @@ class UserService extends Service {
    * @param id String 用户id
    * @returns
    */
-  async delUser({ id }) {
+  async destory({ id }) {
     return await this.app.mysql.delete("users", { id });
   }
   /**

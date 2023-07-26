@@ -3,19 +3,25 @@
     <div class="login-head">登录</div>
     <div class="login-body">
       <a-form ref="formRef" :model="formState" :rules="rules">
-        <a-form-item ref="username" name="username">
+        <a-form-item name="username">
           <a-input autocomplete="off" placeholder="请输入用户名" v-model:value="formState.username">
             <template #prefix>
               <user-outlined />
             </template>
           </a-input>
         </a-form-item>
-        <a-form-item ref="password" name="password">
+        <a-form-item name="password">
           <a-input autocomplete="off" type="password" placeholder="请输入密码" v-model:value="formState.password">
             <template #prefix>
               <lock-outlined />
             </template>
           </a-input>
+        </a-form-item>
+        <a-form-item name="captcha">
+          <a-space>
+            <a-input placeholder="请输入验证码" v-model:value="formState.captcha"></a-input>
+            <span v-html="captcha" @click="onCaptchaClick"></span>
+          </a-space>
         </a-form-item>
         <a-form-item>
           <a-button block type="primary" @click="onSubmit">登录</a-button>
@@ -26,7 +32,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, defineComponent, computed, toRaw } from 'vue'
+import { ref, onMounted, toRaw } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 import { useUserService } from '@/api/user'
@@ -35,19 +41,19 @@ import { ValidateErrorEntity } from 'ant-design-vue/es/form/interface'
 import { UserOutlined, LockOutlined } from '@ant-design/icons-vue'
 import { message } from 'ant-design-vue'
 import { getStorage } from '@/utils/common'
-
+import * as _ from 'lodash'
 const store = useStore()
 const route = useRoute()
 const userService = useUserService()
+
 const formRef = ref()
 const formState = ref<UserManageType.LoginFormState>(new UserManageType.LoginFormState())
 const rules = {
   username: [{ required: true, message: '请输入用户名', trigger: 'change' }],
-  password: [{ required: true, message: '请输入用密码', trigger: 'change' }]
+  password: [{ required: true, message: '请输入用密码', trigger: 'change' }],
+  captcha: [{ required: true, message: '请输入验证码', trigger: 'change' }]
 }
-const token = computed(() => {
-  return store.state.user.token
-})
+const captcha = ref()
 
 const onSubmit = async (): Promise<void> => {
   formRef.value
@@ -68,6 +74,13 @@ const onSubmit = async (): Promise<void> => {
       console.error(error)
     })
 }
+const getCaptcha = async () => {
+  captcha.value = await userService.getCaptcha()
+}
+const onCaptchaClick = _.debounce(getCaptcha, 500)
+onMounted(() => {
+  getCaptcha()
+})
 </script>
 
 <style lang="less">
@@ -79,7 +92,7 @@ const onSubmit = async (): Promise<void> => {
   right: 0;
   margin: auto;
   width: 350px;
-  height: 350px;
+  height: 380px;
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 15px;

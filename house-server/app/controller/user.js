@@ -2,30 +2,39 @@
  * @Author: heinan
  * @Date: 2023-07-23 22:50:43
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-24 08:47:42
+ * @Last Modified time: 2023-07-26 11:44:49
  */
 "use strict";
 const { Controller } = require("egg");
 const { passwordCreator, tokenCreator } = require("../utils");
+const svgCaptcha = require("svg-captcha");
 
 class UserController extends Controller {
   async login() {
     try {
       this.ctx.validate({
+        captcha: "string",
         username: "string",
         password: "string",
       });
     } catch (err) {
-      this.ctx.status = 406;
+      this.ctx.status = 400;
       return (this.ctx.body = {
         code: 0,
         error: err.errors,
       });
     }
+    if (this.ctx.session.captcha !== this.ctx.request.body.captcha) {
+      this.ctx.status = 403;
+      return (this.ctx.body = {
+        code: 0,
+        message: "验证码输入错误！",
+      });
+    }
     const { password, username } = this.ctx.request.body;
     const user = await this.ctx.service.user.find(this.ctx.request.body);
     if (!user) {
-      this.ctx.status = 406;
+      this.ctx.status = 400;
       return (this.ctx.body = {
         code: 0,
         message: `用户:${username}不存在!`,
@@ -53,7 +62,7 @@ class UserController extends Controller {
         password: "string",
       });
     } catch (err) {
-      this.ctx.status = 406;
+      this.ctx.status = 400;
       return (this.ctx.body = {
         code: 0,
         error: err.errors,
@@ -62,7 +71,7 @@ class UserController extends Controller {
     const { username } = this.ctx.request.body;
     const user = await this.ctx.service.user.find(this.ctx.request.body);
     if (user) {
-      this.ctx.status == 406;
+      this.ctx.status == 400;
       return (this.ctx.body = {
         code: 0,
         msg: `用户: ${username} 已被注册!`,
@@ -111,8 +120,8 @@ class UserController extends Controller {
    * @param id String 用户id
    * @returns
    */
-  async delUser() {
-    const result = await this.ctx.service.user.delUser(this.ctx.query);
+  async destory() {
+    const result = await this.ctx.service.user.destory(this.ctx.params);
     if (result.affectedRows) {
       this.ctx.body = {
         code: 1,
@@ -179,6 +188,12 @@ class UserController extends Controller {
         message: "新增成功失败！",
       };
     }
+  }
+  async captcha() {
+    var captcha = svgCaptcha.create();
+    this.ctx.session.captcha = captcha.text.toLocaleLowerCase();
+    this.ctx.response.type = "image/svg+xml";
+    this.ctx.body = captcha.data;
   }
 }
 

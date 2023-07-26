@@ -24,7 +24,7 @@ export default defineComponent({
     const store = useStore()
     const apiManageService = useApiManageService()
     const formRef = ref()
-    const formState = ref<SettingsManageType.ViewState>(new SettingsManageType.ApiState())
+    const formState = ref<SettingsManageType.ApiState>(new SettingsManageType.ApiState())
     const rules = {
       api_authority_text: [{ required: true, message: '请输入接口名称' }],
       api_authority_url: [{ required: true, message: '请输入接口地址' }],

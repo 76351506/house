@@ -58,7 +58,7 @@ const columns = [
 const store = useStore()
 const apiManageService = useApiManageService()
 const formRef = ref()
-const viewList = ref<Array<SettingsManageType.ApiState>>([])
+const viewList = ref<Array<SettingsManageType.ApiState>>()
 const visible = ref<boolean>(false)
 const title = computed(() => store.state.settings.modelTitle)
 
@@ -82,11 +82,11 @@ const handleOk = () => {
       } else {
         message.error(result.message, 1, () => {
           visible.value = false
-          formRef.value.formState = SettingsManageType.ViewState()
+          formRef.value.formState = new SettingsManageType.ApiState()
         })
       }
     })
-    .catch((error: ValidateErrorEntity<SettingsManageType.viewForm>) => {
+    .catch((error: ValidateErrorEntity<SettingsManageType.ApiState>) => {
       console.log('error', error)
     })
 }

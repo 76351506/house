@@ -2,14 +2,11 @@
  * @Author: heinan
  * @Date: 2023-07-20 19:06:56
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-26 09:58:46
+ * @Last Modified time: 2023-07-26 10:53:20
  */
 
 module.exports = (app) => {
-  const {
-    router,
-    controller
-  } = app;
+  const { router, controller } = app;
   router.get("/", controller.home.index);
   // 审核列表
   router.resources("audit", "/api/v1/audit", controller.audit);
@@ -38,24 +35,12 @@ module.exports = (app) => {
 
   // 用户接口
   router.post("/user/login", controller.user.login);
+  router.get("/user/captcha", controller.user.captcha);
   router.post("/user/registry", controller.user.registry);
-
-  /**
-   * 获取用户列表
-   */
   router.get("/getUserList", controller.user.getUserList);
-  /**
-   * 增加用户
-   */
   router.post("/addUserInfo", controller.user.addUserInfo);
-  /**
-   * 编辑用户信息
-   */
   router.post("/updateUserInfo", controller.user.updateUserInfo);
-  /**
-   * 删除用户
-   */
-  router.delete("/delUser", controller.user.delUser);
+  router.delete("/user/:id", controller.user.destory);
 
   // 获取左侧菜单栏数据
   router.get("/sider", controller.home.sider);
@@ -72,17 +57,6 @@ module.exports = (app) => {
   router.post("/staff/staffAdd", controller.staff.StaffAdd); //添加员工
   router.get("/staff/staffSearch", controller.staff.staffSearch); //查找员工
   router.post("/staff/staffEdit", controller.staff.StaffEdit); //添加员工
-
-  // 获取资讯列表
-  router.get("/information", controller.information.information);
-  // 资讯管理删除接口
-  router.delete("/del/information", controller.information.delInformation);
-  // 修改资讯状态接口
-  router.post("/set/information", controller.information.setInformation);
-  // 获取订单列表
-  router.get("/order", controller.order.order);
-  // 订单管理删除接口
-  router.delete("/del/order", controller.order.delOrder);
 
   //----------------房源--------------- //
 

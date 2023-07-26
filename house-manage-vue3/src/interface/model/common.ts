@@ -33,6 +33,7 @@ export namespace CommonManageType {
     code: number
     data: Array<T>
     msg?: string
+    message?: string
     total?: number
     currentPage?: number
   }

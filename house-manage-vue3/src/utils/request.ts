@@ -36,19 +36,20 @@ request.interceptors.response.use(
     switch (status) {
       case 401:
         message.error(error.response.data.msg as string, 1, () => {
-          //   signOut()
           const pathUrl = location.href.split('/')
           window.location.href = `/user/login?redirect=${encodeURIComponent('/' + pathUrl[3])}`
         })
         break
-      case 406:
-        message.error('暂无数据！')
+      case 400:
+        message.error('请求参数有误!')
+        break
+      case 403:
+        message.error(error.response?.data.message)
         break
       case 500:
         message.error('服务端报错,请重启再试！')
         break
       default:
-        message.error('未知错误，请刷新页面！')
         break
     }
     return Promise.reject(error)

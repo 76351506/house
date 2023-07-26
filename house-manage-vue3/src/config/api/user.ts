@@ -14,5 +14,6 @@ export const API_USER = {
   getUserInfoById: () => resolveUrl('/user/getUserInfo'),
   upload: () => resolveUrl('/user/upload'),
   identity: () => resolveUrl('/identity/list'),
-  updateUser: () => resolveUrl('/user/updataUserInfo')
+  updateUser: () => resolveUrl('/user/updataUserInfo'),
+  getCaptcha: () => resolveUrl('/user/captcha')
 }

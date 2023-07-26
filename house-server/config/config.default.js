@@ -2,12 +2,10 @@
  * @Author: heinan
  * @Date: 2023-07-21 10:40:26
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-25 20:15:35
+ * @Last Modified time: 2023-07-26 11:08:17
  */
 "use strict";
-const {
-  routeCreator
-} = require("../app/utils");
+const { routeCreator } = require("../app/utils");
 
 module.exports = (appInfo) => {
   const config = (exports = {});
@@ -22,8 +20,8 @@ module.exports = (appInfo) => {
   config.mysql = {
     client: {
       // host: "10.37.26.179",
-      // host: "localhost",
-      host: "10.37.7.101",
+      host: "localhost",
+      // host: "10.37.7.101",
       port: "3306",
       user: "root",
       password: "123456",
@@ -48,6 +46,7 @@ module.exports = (appInfo) => {
   // 超级白名单，登录和身份都不需要验证
   config.whiteList = [
     routeCreator("/user/login", "POST"),
+    routeCreator("/user/captcha", "GET"),
     routeCreator(/^\/user\/getAuthInfo\/*/, "any"), //获取权限信息
     routeCreator(/^\/user\/delAutho\/*/, "any"), // 删除权限信息
     routeCreator("/user/cancelIdentityApi", "POST"), //取消身份的api接口权限

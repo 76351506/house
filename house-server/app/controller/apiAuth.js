@@ -31,7 +31,7 @@ class ApiAuthrityController extends Controller {
         api_authority_id: "string",
       });
     } catch (err) {
-      this.ctx.status = 406;
+      this.ctx.status = 400;
       return (this.ctx.body = {
         code: 0,
         error: err.errors,
@@ -57,7 +57,7 @@ class ApiAuthrityController extends Controller {
         api_authority_id: "string",
       });
     } catch (err) {
-      this.ctx.status = 406;
+      this.ctx.status = 400;
       return (this.ctx.body = {
         code: 0,
         error: err.errors,
