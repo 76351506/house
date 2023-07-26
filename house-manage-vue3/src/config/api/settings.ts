@@ -8,5 +8,9 @@ import { resolveUrl } from '@/utils'
 
 export const API_SETTINGS = {
   viewList: () => resolveUrl('/api/v1/view'),
-  apiList: () => resolveUrl('/api/v1/api')
+  apiList: () => resolveUrl('/api/v1/api'),
+  getIdentityList: () => resolveUrl('/api/v1/identity'),
+  getViewAuthByIdentityId: () => resolveUrl('/getViewAuthByIdentityId'),
+  setViewAuthByIdentityId: () => resolveUrl('/api/v1/viewAuth'),
+  setViewAuthByIdentityList: () => resolveUrl('/setViewAuthByIdentityList')
 }

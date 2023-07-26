@@ -17,4 +17,8 @@ export namespace SettingsManageType {
     api_authority_url: string | undefined
     api_authority_method: string | undefined
   }
+  export interface IdentityInterface {
+    identity_id: string
+    identity_text: string
+  }
 }

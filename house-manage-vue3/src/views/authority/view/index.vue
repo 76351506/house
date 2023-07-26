@@ -91,7 +91,6 @@ const getViewList = async () => {
 }
 
 const confirm = async (id: string) => {
-  //
   const result = await viewManageService.delete(id)
   if (result.code) {
     message.success(result.message, 1, () => {
