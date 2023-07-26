@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2023-07-20 19:06:56
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-24 16:10:16
+ * @Last Modified time: 2023-07-25 20:15:04
  */
 
 module.exports = (app) => {
@@ -12,9 +12,6 @@ module.exports = (app) => {
   } = app;
   router.get("/", controller.home.index);
   // 审核列表
-  // router.get("/audit", controller.audit.audit);
-  // router.delete("/audit", controller.audit.delAudit);
-  // router.post("/set/audit", controller.audit.setAudit);
   router.resources("audit", "/api/v1/audit", controller.audit);
   router.resources("identity", "/api/v1/identity", controller.identity);
   router.resources("api", "/api/v1/api", controller.api);
@@ -22,7 +19,10 @@ module.exports = (app) => {
   router.resources("apiAuth", "/api/v1/apiAuth", controller.apiAuth);
   router.resources("viewAuth", "/api/v1/viewAuth", controller.viewAuth);
   router.resources("broker", "/api/v1/broker", controller.broker);
-
+  // 资讯列表
+  router.resources("infos", "/api/v1/infos", controller.infos);
+  router.resources("order", "/api/v1/order", controller.order);
+  router.resources("group", "/api/v1/group", controller.group);
   // 根据用户id获取用户身份
   router.get("/getIdentityById/:id", controller.identity.getIdentityById);
   // 根据用户id对应的身份权限identity_id获取对应的视图权限
@@ -40,12 +40,38 @@ module.exports = (app) => {
   router.post("/user/login", controller.user.login);
   router.post("/user/registry", controller.user.registry);
 
-  // 获取用户列表
-  router.get("/userInfo", controller.userInfo.userInfo);
-  // 删除用户
-  router.delete("/delUser", controller.userInfo.delUser);
+  /**
+   * 获取用户列表
+   */
+  router.get("/getUserList", controller.user.getUserList);
+  /**
+   * 增加用户
+   */
+  router.post("/addUserInfo", controller.user.addUserInfo);
+  /**
+   * 编辑用户信息
+   */
+  router.post("/updateUserInfo", controller.user.updateUserInfo);
+  /**
+   * 删除用户
+   */
+  router.delete("/delUser", controller.user.delUser);
+
   // 获取左侧菜单栏数据
   router.get("/sider", controller.home.sider);
+
+  //部门管理
+  router.get("/staff/portList", controller.staff.Portlist); //获取部门列表
+  router.get("/staff/portDel", controller.staff.delPort); //删除部门
+  router.post("/staff/portAdd", controller.staff.PortAdd); //添加部门
+  router.get("/staff/portSearch", controller.staff.portSearch); //查找部门
+  router.post("/staff/portEdit", controller.staff.PortEdit); //添加部门
+  //员工管理
+  router.get("/staff/staffList", controller.staff.Stafflist); //获取员工列表
+  router.get("/staff/staffDel", controller.staff.delStaff); //删除员工
+  router.post("/staff/staffAdd", controller.staff.StaffAdd); //添加员工
+  router.get("/staff/staffSearch", controller.staff.staffSearch); //查找员工
+  router.post("/staff/staffEdit", controller.staff.StaffEdit); //添加员工
 
   // 获取资讯列表
   router.get("/information", controller.information.information);
@@ -84,15 +110,6 @@ module.exports = (app) => {
   router.post("/setRentHouseStatus", controller.housing.setRentHouseStatus);
   // 修改二手房经纪人数据接口
   router.post("/alterRentBroker", controller.housing.alterRentBroker);
-
-
-  //----------------团购--------------- //
-  // 获取团购列表
-  router.get("/group", controller.group.group);
-  // 删除团购列表
-  router.delete("/del/group", controller.group.delGroup);
-  // 设置团购列表
-  router.post("/set/group", controller.group.setGroup);
   // 获取直播列表
   router.get("/live", controller.live.live);
   // 删除直播

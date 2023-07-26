@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2020-07-16 11:33:19
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-24 17:34:44
+ * @Last Modified time: 2023-07-25 19:17:19
  */
 "use strict";
 const {
@@ -53,10 +53,10 @@ class AuditService extends Service {
     });
     const total = await this.app.mysql.count("controls", where);
     return {
-      data: result,
       total,
       pageSize: Number(pageSize),
       currentPage: Number(currentPage),
+      data: result,
     };
   }
   async destroy({
