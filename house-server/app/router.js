@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2023-07-20 19:06:56
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-25 20:15:04
+ * @Last Modified time: 2023-07-26 09:58:46
  */
 
 module.exports = (app) => {
@@ -120,8 +120,6 @@ module.exports = (app) => {
   // ----------------------------客户端（移动）-------------------------------- //
   // 获取房源
   router.get("/renting", controller.housing.getRenting);
-  // 获取房源详情
-  // router.get("/detail", controller.housing.getDetail);
   // 获取地图所有有房的列表
   router.get("/mapList", controller.map.getMaps);
 };
