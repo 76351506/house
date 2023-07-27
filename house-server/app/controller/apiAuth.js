@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2023-07-24 09:44:05
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-24 11:39:41
+ * @Last Modified time: 2023-07-27 12:05:53
  */
 "use strict";
 const { Controller } = require("egg");
@@ -108,6 +108,23 @@ class ApiAuthrityController extends Controller {
         code: 0,
         message: "暂无数据!",
         data: [],
+      };
+    }
+  }
+  async setApiAuthByIdentityList() {
+    const result = await this.ctx.service.apiAuth.setApiAuthByIdentityList({
+      ...this.ctx.params,
+      ...this.ctx.request.body,
+    });
+    if (result.affectedRows) {
+      this.ctx.body = {
+        code: 1,
+        message: "设置成功!",
+      };
+    } else {
+      this.ctx.body = {
+        code: 0,
+        message: "设置失败!",
       };
     }
   }

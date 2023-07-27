@@ -2,14 +2,14 @@
  * @Author: heinan
  * @Date: 2023-07-23 22:50:43
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-24 10:14:13
+ * @Last Modified time: 2023-07-26 16:58:30
  */
 "use strict";
 const { Controller } = require("egg");
 
 class IdentityController extends Controller {
   async index() {
-    const result = this.ctx.service.identity.index();
+    const result = await this.ctx.service.identity.index();
     if (result.length) {
       this.ctx.body = {
         code: 1,
@@ -28,7 +28,6 @@ class IdentityController extends Controller {
     const result = await this.ctx.service.identity.create(
       this.ctx.request.body
     );
-    console.log(result);
     if (result.affectedRows) {
       this.ctx.body = {
         code: 1,

@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2023-07-21 10:40:26
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-26 11:08:17
+ * @Last Modified time: 2023-07-27 16:26:46
  */
 "use strict";
 const { routeCreator } = require("../app/utils");
@@ -12,6 +12,9 @@ module.exports = (appInfo) => {
   config.keys = appInfo.name + "_1636591141914_4788";
   // config.middleware = ["responseTime", "checkLogin", "checkIdentity", "gzip"];
   // config.middleware = ["responseTime", "checkLogin", "gzip"];
+  config.multipart = {
+    mode: "file",
+  };
   config.security = {
     csrf: {
       enable: false,

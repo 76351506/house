@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2023-07-20 19:06:56
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-26 10:53:20
+ * @Last Modified time: 2023-07-27 16:14:02
  */
 
 module.exports = (app) => {
@@ -20,17 +20,30 @@ module.exports = (app) => {
   router.resources("infos", "/api/v1/infos", controller.infos);
   router.resources("order", "/api/v1/order", controller.order);
   router.resources("group", "/api/v1/group", controller.group);
+
   // 根据用户id获取用户身份
   router.get("/getIdentityById/:id", controller.identity.getIdentityById);
-  // 根据用户id对应的身份权限identity_id获取对应的视图权限
+
+  // 根据用户id对应的身份权限identity_id,获取对应的视图权限
   router.get(
     "/getViewAuthByIdentityId/:id",
     controller.viewAuth.getViewAuthByIdentityId
   );
-  // 根据用户id对应的身份权限identity_id获取对应的接口权限
+  // 根据用户id对应的身份权限identity_id,设置多个视图权限
+  router.post(
+    "/setViewAuthByIdentityList",
+    controller.viewAuth.setViewAuthByIdentityList
+  );
+
+  // 根据用户id对应的接口权限identity_id获取对应的接口权限
   router.get(
     "/getApiAuthByIdentityId/:id",
     controller.apiAuth.getApiAuthByIdentityId
+  );
+  // 根据用户id对应的身份权限identity_id,设置多个接口权限
+  router.post(
+    "/setApiAuthByIdentityList",
+    controller.apiAuth.setApiAuthByIdentityList
   );
 
   // 用户接口
@@ -58,6 +71,7 @@ module.exports = (app) => {
   router.get("/staff/staffSearch", controller.staff.staffSearch); //查找员工
   router.post("/staff/staffEdit", controller.staff.StaffEdit); //添加员工
 
+  router.post("/upload", controller.common.upload);
   //----------------房源--------------- //
 
   // 获取房源列表

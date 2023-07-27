@@ -2,8 +2,10 @@
  * @Author: heinan
  * @Date: 2023-07-23 22:55:13
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-24 14:53:48
+ * @Last Modified time: 2023-07-27 17:02:24
  */
+const path = require("path");
+const md5 = require("md5");
 const crypto = require("crypto");
 const jsonwebtoken = require("jsonwebtoken");
 const { v4: uuidv4 } = require("uuid");
@@ -63,8 +65,19 @@ const routeCreator = (url, method) => {
   return { url, method };
 };
 
+const nameCreator = (filename) => {
+  const extname = path.extname(filename);
+  const basename = path.basename(filename, extname);
+  const url = JSON.stringify({
+    basename,
+    timer: new Date().getTime(),
+  });
+  return md5(url) + extname;
+};
+
 module.exports = {
   idCreator,
+  nameCreator,
   routeCreator,
   tokenCreator,
   passwordCreator,

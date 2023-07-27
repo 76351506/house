@@ -2,12 +2,9 @@
  * @Author: heinan
  * @Date: 2023-07-24 00:24:57
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-26 10:29:55
+ * @Last Modified time: 2023-07-27 17:06:12
  */
 "use strict";
-
-const fs = require("fs");
-const path = require("path");
 const Service = require("egg").Service;
 const { idCreator, passwordCreator } = require("../utils");
 
@@ -64,12 +61,7 @@ class UserService extends Service {
     return await this.ctx.app.mysql.query($sql, $params);
   }
 
-  async upload(filepath, filenam) {
-    const uploadData = fs.readFileSync(filepath);
-    const uploadDir = path.join(process.cwd(), "app/public/upload", filenam);
-    const uploadError = fs.writeFileSync(uploadDir, uploadData);
-    return uploadError;
-  }
+  
   async addIdentiry({ identity_text, identity_type }) {
     const identity_id = idCreator(identity_text);
     const $params = [identity_id, identity_text, identity_type];
