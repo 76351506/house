@@ -24,10 +24,10 @@
   </LayoutPage>
 </template>
 <script lang="ts" setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, ComputedRef } from 'vue'
 import { useStore } from 'vuex'
 import { useViewManageService } from '@/api/view'
-import { SettingsManageType } from '@/interface/model/settings'
+import { AuthorityManageType } from '@/interface/model/authority'
 import { ValidateErrorEntity } from 'ant-design-vue/es/form/interface'
 import { message } from 'ant-design-vue'
 import LayoutPage from '@/components/layout/page.vue'
@@ -53,9 +53,10 @@ const columns = [
 const store = useStore()
 const viewManageService = useViewManageService()
 const formRef = ref()
-const viewList = ref<Array<SettingsManageType.ViewState>>([])
+const viewList = ref<Array<AuthorityManageType.ViewState>>([])
 const visible = ref<boolean>(false)
 const title = computed(() => store.state.settings.modelTitle)
+const modelType: ComputedRef<string> = computed(() => store.state.settings.modelType)
 
 const openModel = (type: string, title: string, id: string) => {
   visible.value = true
@@ -68,20 +69,20 @@ const handleOk = () => {
   formRef.value.formRef
     .validate()
     .then(async () => {
-      const result = store.state.settings.type == 'create' ? await viewManageService.add(formRef.value.formState) : await viewManageService.edit(formRef.value.formState)
+      const result = modelType.value == 'create' ? await viewManageService.add(formRef.value.formState) : await viewManageService.edit(formRef.value.formState)
       if (result.code) {
-        message.success(result.message, 1, () => {
+        message.success(result.message as string, 1, () => {
           visible.value = false
           getViewList()
         })
       } else {
-        message.error(result.message, 1, () => {
+        message.error(result.message as string, 1, () => {
           visible.value = false
-          formRef.value.formState = SettingsManageType.ViewState()
+          formRef.value.formState = new AuthorityManageType.ViewState()
         })
       }
     })
-    .catch((error: ValidateErrorEntity<SettingsManageType.viewForm>) => {
+    .catch((error: ValidateErrorEntity<AuthorityManageType.ViewState>) => {
       console.log('error', error)
     })
 }
@@ -93,11 +94,11 @@ const getViewList = async () => {
 const confirm = async (id: string) => {
   const result = await viewManageService.delete(id)
   if (result.code) {
-    message.success(result.message, 1, () => {
+    message.success(result.message as string, 1, () => {
       getViewList()
     })
   } else {
-    message.error(result.message, 1, () => {
+    message.error(result.message as string, 1, () => {
       getViewList()
     })
   }

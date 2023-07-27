@@ -24,10 +24,10 @@
   </LayoutPage>
 </template>
 <script lang="ts" setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, ComputedRef } from 'vue'
 import { useStore } from 'vuex'
 import { useApiManageService } from '@/api/api'
-import { SettingsManageType } from '@/interface/model/settings'
+import { AuthorityManageType } from '@/interface/model/authority'
 import { ValidateErrorEntity } from 'ant-design-vue/es/form/interface'
 import { message } from 'ant-design-vue'
 import LayoutPage from '@/components/layout/page.vue'
@@ -58,9 +58,10 @@ const columns = [
 const store = useStore()
 const apiManageService = useApiManageService()
 const formRef = ref()
-const viewList = ref<Array<SettingsManageType.ApiState>>()
+const viewList = ref<Array<AuthorityManageType.ApiState>>()
 const visible = ref<boolean>(false)
 const title = computed(() => store.state.settings.modelTitle)
+const modelType: ComputedRef<string> = computed(() => store.state.settings.modelType)
 
 const openModel = (type: string, title: string, id: string) => {
   visible.value = true
@@ -73,20 +74,20 @@ const handleOk = () => {
   formRef.value.formRef
     .validate()
     .then(async () => {
-      const result = store.state.settings.type == 'create' ? await apiManageService.add(formRef.value.formState) : await apiManageService.edit(formRef.value.formState)
+      const result = modelType.value == 'create' ? await apiManageService.add(formRef.value.formState) : await apiManageService.edit(formRef.value.formState)
       if (result.code) {
-        message.success(result.message, 1, () => {
+        message.success(result.message as string, 1, () => {
           visible.value = false
           getApiList()
         })
       } else {
-        message.error(result.message, 1, () => {
+        message.error(result.message as string, 1, () => {
           visible.value = false
-          formRef.value.formState = new SettingsManageType.ApiState()
+          formRef.value.formState = new AuthorityManageType.ApiState()
         })
       }
     })
-    .catch((error: ValidateErrorEntity<SettingsManageType.ApiState>) => {
+    .catch((error: ValidateErrorEntity<AuthorityManageType.ApiState>) => {
       console.log('error', error)
     })
 }
@@ -98,11 +99,11 @@ const getApiList = async () => {
 const confirm = async (id: string) => {
   const result = await apiManageService.delete(id)
   if (result.code) {
-    message.success(result.message, 1, () => {
+    message.success(result.message as string, 1, () => {
       getApiList()
     })
   } else {
-    message.error(result.message, 1, () => {
+    message.error(result.message as string, 1, () => {
       getApiList()
     })
   }

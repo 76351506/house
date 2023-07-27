@@ -4,7 +4,9 @@
       <slot name="layout-page-search"></slot>
     </div>
 
-    <slot></slot>
+    <div class="layout-page-content">
+      <slot></slot>
+    </div>
     <div class="layout-page-pagination">
       <slot name="layout-page-pagination"></slot>
     </div>
@@ -18,6 +20,10 @@
     background-color: #fff;
     padding: 16px;
     margin-bottom: 16px;
+  }
+  .layout-page-content {
+    background-color: #fff;
+    padding: 16px;
   }
   .layout-page-pagination {
     margin-top: 16px;

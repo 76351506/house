@@ -4,7 +4,7 @@
       <a-form-item ref="name" label="接口名称" name="api_authority_text">
         <a-input v-model:value="formState.api_authority_text" />
       </a-form-item>
-      <a-form-item label="组件" name="接口地址">
+      <a-form-item label="组件" name="api_authority_url">
         <a-input v-model:value="formState.api_authority_url" />
       </a-form-item>
       <a-form-item ref="name" label="请求方式" name="api_authority_method">
@@ -16,7 +16,7 @@
 <script lang="ts">
 import { useStore } from 'vuex'
 import { ref, defineComponent, onMounted } from 'vue'
-import { SettingsManageType } from '@/interface/model/settings'
+import { AuthorityManageType } from '@/interface/model/authority'
 import { useApiManageService } from '@/api/api'
 export default defineComponent({
   name: 'ViewForm',
@@ -24,7 +24,7 @@ export default defineComponent({
     const store = useStore()
     const apiManageService = useApiManageService()
     const formRef = ref()
-    const formState = ref<SettingsManageType.ApiState>(new SettingsManageType.ApiState())
+    const formState = ref<AuthorityManageType.ApiState>(new AuthorityManageType.ApiState())
     const rules = {
       api_authority_text: [{ required: true, message: '请输入接口名称' }],
       api_authority_url: [{ required: true, message: '请输入接口地址' }],
