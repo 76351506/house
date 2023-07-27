@@ -2,12 +2,10 @@
  * @Author: heinan
  * @Date: 2023-07-23 22:59:43
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-24 17:29:51
+ * @Last Modified time: 2023-07-27 18:33:11
  */
 "use strict";
-const {
-  Controller
-} = require("egg");
+const { Controller } = require("egg");
 
 // 审核管理
 class AuditController extends Controller {

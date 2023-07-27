@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2020-07-16 11:33:19
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-24 10:12:39
+ * @Last Modified time: 2023-07-27 18:32:50
  */
 "use strict";
 
@@ -12,7 +12,6 @@ const { idCreator } = require("../utils");
 class IdentityService extends Service {
   async create({ identity_text }) {
     const $data = { identity_text, identity_id: idCreator() };
-    console.log($data);
     return await this.app.mysql.insert("identity", $data);
   }
   async index() {
@@ -28,7 +27,6 @@ class IdentityService extends Service {
   }
   async getIdentityById({ id }) {
     const $sql = `SELECT login.id,login.username,login.identity_id,identity.identity_text FROM login,identity WHERE login.identity_id=identity.identity_id AND login.id='${id}'`;
-    console.log($sql);
     return await this.app.mysql.query($sql);
   }
 }

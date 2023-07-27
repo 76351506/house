@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2023-07-23 22:50:43
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-26 11:44:49
+ * @Last Modified time: 2023-07-27 18:34:14
  */
 "use strict";
 const { Controller } = require("egg");
@@ -194,6 +194,24 @@ class UserController extends Controller {
     this.ctx.session.captcha = captcha.text.toLocaleLowerCase();
     this.ctx.response.type = "image/svg+xml";
     this.ctx.body = captcha.data;
+  }
+  async getUserPermissions() {
+    const result = await this.ctx.service.user.getUserPermissions(
+      this.ctx.query
+    );
+    if (result.length) {
+      this.ctx.body = {
+        code: 1,
+        msg: "查询成功！",
+        data: result,
+      };
+    } else {
+      this.ctx.body = {
+        code: 0,
+        msg: "暂无数据！",
+        data: [],
+      };
+    }
   }
 }
 

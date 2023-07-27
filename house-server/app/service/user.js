@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2023-07-24 00:24:57
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-27 17:06:12
+ * @Last Modified time: 2023-07-27 18:35:21
  */
 "use strict";
 const Service = require("egg").Service;
@@ -22,31 +22,9 @@ class UserService extends Service {
     const $params = [idCreator(), username, passwordCreator(password)];
     return await this.ctx.app.mysql.query($sql, $params);
   }
-  async modileLogin({ mobile }) {
-    const $params = [mobile];
-    const $sql = "select * from login where mobile=?";
-    return await this.ctx.app.mysql.query($sql, $params);
-  }
-  async modifyPwdByMobile({ mobile, password }) {
-    const pwd = passwordCreator(password);
-    const $params = [pwd, mobile];
-    const $sql = "update login set password=?  where mobile=?";
-    return await this.ctx.app.mysql.query($sql, $params);
-  }
-  async modifyPwdByEmail({ email, password }) {
-    const pwd = passwordCreator(password);
-    let res = await this.ctx.app.mysql.query(
-      "select * from user where email=?",
-      [email]
-    );
-    const $params = [pwd, res[0].uid];
-    const $sql = "update login set password=?  where uid=?";
-    return await this.ctx.app.mysql.query($sql, $params);
-  }
-  async getUserPermissions(uid) {
-    const $params = [uid];
-    const $sql = "select * from login where uid=?";
-    return await this.ctx.app.mysql.query($sql, $params);
+  async getUserPermissions({ id }) {
+    const $sql = `select id,login.identity_id,username, identity_text FROM login,identity where login.identity_id=identity.identity_id and login.id=?`;
+    return await this.ctx.app.mysql.query($sql, [id]);
   }
 
   async updataUserInfo({ uid, nickname, graph, email, mobile, avatar }) {
@@ -61,7 +39,6 @@ class UserService extends Service {
     return await this.ctx.app.mysql.query($sql, $params);
   }
 
-  
   async addIdentiry({ identity_text, identity_type }) {
     const identity_id = idCreator(identity_text);
     const $params = [identity_id, identity_text, identity_type];

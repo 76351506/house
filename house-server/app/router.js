@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2023-07-20 19:06:56
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-27 16:14:02
+ * @Last Modified time: 2023-07-27 17:20:08
  */
 
 module.exports = (app) => {
@@ -54,7 +54,8 @@ module.exports = (app) => {
   router.post("/addUserInfo", controller.user.addUserInfo);
   router.post("/updateUserInfo", controller.user.updateUserInfo);
   router.delete("/user/:id", controller.user.destory);
-
+  // 获取用户id及权限
+  router.get("/getUserPermissions", controller.user.getUserPermissions);
   // 获取左侧菜单栏数据
   router.get("/sider", controller.home.sider);
 

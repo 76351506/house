@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2023-07-24 09:44:05
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-25 17:14:27
+ * @Last Modified time: 2023-07-27 18:33:04
  */
 "use strict";
 const { Controller } = require("egg");
@@ -85,7 +85,6 @@ class ApiController extends Controller {
       ...this.ctx.params,
       ...this.ctx.request.body,
     });
-    console.log(result)
     if (result.affectedRows) {
       this.ctx.body = {
         code: 1,

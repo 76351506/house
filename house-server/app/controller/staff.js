@@ -15,11 +15,9 @@ class Staff extends Controller {
   async delPort() {
     const { ctx } = this;
     const { id } = ctx.query;
-    console.log(id, "iiiii");
     const result = await this.app.mysql.query(
       `delete from port where id = '${id}'`
     );
-    console.log(result, "result");
     if (result.affectedRows == 1) {
       ctx.body = {
         code: 200,
@@ -35,11 +33,9 @@ class Staff extends Controller {
   async PortAdd() {
     const { ctx } = this;
     const { name, num, charge, job, tel } = ctx.request.body;
-    console.log(num, "iiiii");
     const result = await this.app.mysql.query(
       `insert into port (name,num,charge,job,tel) values ('${name}','${num}','${charge}','${job}',${tel})`
     );
-    console.log(result, "result");
     if (result.affectedRows == 1) {
       ctx.body = {
         code: 200,
@@ -55,7 +51,6 @@ class Staff extends Controller {
   async PortEdit() {
     const { ctx } = this;
     const { id, name, num, charge, job, tel } = ctx.request.body;
-    console.log(num, "iiiii");
     const result = await this.app.mysql.update("port", {
       id,
       name,
@@ -64,7 +59,6 @@ class Staff extends Controller {
       job,
       tel,
     });
-    console.log(result, "result");
     if (result.affectedRows == 1) {
       ctx.body = {
         code: 200,
@@ -83,7 +77,6 @@ class Staff extends Controller {
     const result = await this.app.mysql.query(
       `select * from port where name = '${searchVal}'`
     );
-    console.log(result, "result");
     if (result.length >= 1) {
       ctx.body = {
         code: 200,
@@ -110,11 +103,9 @@ class Staff extends Controller {
   async delStaff() {
     const { ctx } = this;
     const { id } = ctx.query;
-    console.log(id, "iiiii");
     const result = await this.app.mysql.query(
       `delete from staff where id = '${id}'`
     );
-    console.log(result, "result");
     if (result.affectedRows == 1) {
       ctx.body = {
         code: 200,
@@ -131,11 +122,9 @@ class Staff extends Controller {
     const { ctx } = this;
     const password = Math.random().toString().substring(3, 9);
     const { name, jobNum, job, tel, port } = ctx.request.body;
-    console.log(jobNum, "iiiii");
     const result = await this.app.mysql.query(
       `insert into staff (name,jobNum,password,job,tel,port) values ('${name}','${jobNum}','${password}','${job}','${tel}','${port}')`
     );
-    console.log(result, "result");
     if (result.affectedRows == 1) {
       ctx.body = {
         code: 200,
@@ -151,7 +140,6 @@ class Staff extends Controller {
   async StaffEdit() {
     const { ctx } = this;
     const { id, name, jobNum, password, job, tel, port } = ctx.request.body;
-    console.log(jobNum, "iiiii");
     const result = await this.app.mysql.update("staff", {
       id,
       name,
@@ -161,7 +149,6 @@ class Staff extends Controller {
       tel,
       port,
     });
-    console.log(result, "result");
     if (result.affectedRows == 1) {
       ctx.body = {
         code: 200,
@@ -180,7 +167,6 @@ class Staff extends Controller {
     const result = await this.app.mysql.query(
       `select * from staff where name = '${searchVal}'`
     );
-    console.log(result, "result");
     if (result.length >= 1) {
       ctx.body = {
         code: 200,
@@ -195,3 +181,4 @@ class Staff extends Controller {
   }
 }
 module.exports = Staff;
+

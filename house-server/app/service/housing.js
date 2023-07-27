@@ -2,17 +2,13 @@
  * @Author: heinan
  * @Date: 2020-07-16 11:33:19
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-24 17:34:44
+ * @Last Modified time: 2023-07-27 18:35:01
  */
 "use strict";
-const {
-  Service
-} = require("egg");
-const {
-  idCreator
-} = require('../utils/index')
+const { Service } = require("egg");
+const { idCreator } = require("../utils/index");
+
 class HouseService extends Service {
-  // 查询房源
   async index({
     area,
     province,
@@ -21,7 +17,7 @@ class HouseService extends Service {
     name,
     id,
     currentPage,
-    pageSize
+    pageSize,
   }) {
     const where = {};
     if (area) {
@@ -44,10 +40,11 @@ class HouseService extends Service {
       where.id = id;
     }
     if (state == "全部") {
-      state = ''
+      state = "";
     } else if (state) {
       where.state = state;
-    } else {}
+    } else {
+    }
     const result = await this.app.mysql.select("renthouses", {
       where,
       offset: (currentPage - 1) * pageSize,
@@ -63,41 +60,34 @@ class HouseService extends Service {
   }
 
   // 删除房源管理销售楼盘数据接口
-  async destroy({
-    id
-  }) {
+  async destroy({ id }) {
     return await this.app.mysql.delete("renthouses", {
-      id
+      id,
     });
   }
 
   // 修改房源管理销售楼盘状态接口
-  async update({
-    id,
-    status
-  }) {
+  async update({ id, status }) {
     const $data = {
-      status
+      status,
     };
     const $options = {
       where: {
-        id
-      }
+        id,
+      },
     };
     return await this.app.mysql.update("renthouses", $data, $options);
   }
+  
   // 修改房源经纪人数据接口
-  async updateBroker({
-    id,
-    broker
-  }) {
+  async updateBroker({ id, broker }) {
     const $data = {
-      broker
+      broker,
     };
     const $options = {
       where: {
-        id
-      }
+        id,
+      },
     };
     return await this.app.mysql.update("renthouses", $data, $options);
   }
@@ -184,7 +174,7 @@ class HouseService extends Service {
     lease, //租期
     renovation, //装修
     status, //装修
-    id
+    id,
   }) {
     const $data = {
       updated_time: new Date().getTime(),
@@ -214,8 +204,8 @@ class HouseService extends Service {
     };
     const $options = {
       where: {
-        id
-      }
+        id,
+      },
     };
     return await this.app.mysql.update("renthouses", $data, $options);
   }
@@ -229,7 +219,7 @@ class HouseService extends Service {
     name,
     id,
     currentPage,
-    pageSize
+    pageSize,
   }) {
     const where = {};
     if (area) {
@@ -252,10 +242,11 @@ class HouseService extends Service {
       where.county = county;
     }
     if (state == "全部") {
-      state = ''
+      state = "";
     } else if (state) {
       where.state = state;
-    } else {}
+    } else {
+    }
     const result = await this.app.mysql.select("secondhouses", {
       where,
       offset: (currentPage - 1) * pageSize,
@@ -271,44 +262,34 @@ class HouseService extends Service {
   }
 
   // 修改二手房源状态接口
-  async secondUpdate({
-    id,
-    status
-  }) {
+  async secondUpdate({ id, status }) {
     const $data = {
-      status
+      status,
     };
     const $options = {
       where: {
-        id
-      }
+        id,
+      },
     };
     return await this.app.mysql.update("secondhouses", $data, $options);
   }
 
-
   // 删除二手房源管理销售楼盘数据接口
-  async secondDestroy({
-    id
-  }) {
+  async secondDestroy({ id }) {
     return await this.app.mysql.delete("secondhouses", {
-      id
+      id,
     });
   }
 
-
   // 修改二手房源经纪人数据接口
-  async updatesecondBroker({
-    id,
-    broker
-  }) {
+  async updatesecondBroker({ id, broker }) {
     const $data = {
-      broker
+      broker,
     };
     const $options = {
       where: {
-        id
-      }
+        id,
+      },
     };
     return await this.app.mysql.update("secondhouses", $data, $options);
   }
@@ -383,7 +364,7 @@ class HouseService extends Service {
     useto, //用途
     renovation, //装修
     status, //装修
-    id
+    id,
   }) {
     const $data = {
       updated_time: new Date().getTime(),
@@ -409,22 +390,15 @@ class HouseService extends Service {
     };
     const $options = {
       where: {
-        id
-      }
+        id,
+      },
     };
     return await this.app.mysql.update("secondhouses", $data, $options);
   }
 
   //---------- 租房------------
 
-  async getRent({
-    pay,
-    area,
-    price,
-    currentPage,
-    pageSize,
-    resident,
-  }) {
+  async getRent({ pay, area, price, currentPage, pageSize, resident }) {
     const where = {};
     if (area) {
       // area = area.replace(/(区|县)/, "");
@@ -462,9 +436,7 @@ class HouseService extends Service {
   }
 
   //获取详情
-
-
-
 }
 
 module.exports = HouseService;
+

@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2023-07-23 22:50:43
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-26 16:58:30
+ * @Last Modified time: 2023-07-27 18:33:22
  */
 "use strict";
 const { Controller } = require("egg");
@@ -76,7 +76,6 @@ class IdentityController extends Controller {
     const result = await this.ctx.service.identity.getIdentityById(
       this.ctx.params
     );
-    console.log(result);
     if (result.length) {
       this.ctx.body = {
         code: 1,

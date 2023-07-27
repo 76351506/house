@@ -2,7 +2,7 @@
  * @Author: heinan
  * @Date: 2020-07-16 11:33:19
  * @Last Modified by: heinan
- * @Last Modified time: 2023-07-25 20:09:20
+ * @Last Modified time: 2023-07-27 18:34:57
  */
 "use strict";
 
@@ -103,7 +103,6 @@ class GorupService extends Service {
       group_info,
       group_id: idCreator(),
     };
-    console.log($data);
     return await this.app.mysql.insert("groups", $data);
   }
 }
